@@ -19,7 +19,16 @@
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
-                &nbsp;
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <i class="fa fa-users"></i> @lang('admin/common.menu.users')<span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ route('admin.permissions') }}">@lang('admin/common.menu.permissions')</a></li>
+                    </ul>
+
+                </li>
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -49,6 +58,18 @@
                         </ul>
                     </li>
                 @endguest
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <i class="fa fa-language"></i> {{ strtoupper(App::getLocale()) }} <span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu" role="menu">
+                        @foreach(config('app.locales') as $key => $value)
+                            <li><a href="/{{ $key }}/{{ substr(Request::path(), 3) }}">{{ $value }}</a></li>
+                        @endforeach
+                    </ul>
+
+                </li>
             </ul>
         </div>
     </div>

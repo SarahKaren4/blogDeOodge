@@ -3,8 +3,8 @@
 
     @include('admin.partials._nav')
 
-    @include('site.partials._alerts')
+    @include('admin.partials._alerts')
 
     @yield('content')
 
-@include('site.partials._footer')
+@include('admin.partials._footer')

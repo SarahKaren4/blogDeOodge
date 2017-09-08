@@ -30,5 +30,19 @@ Route::namespace('Admin')->group(function () {
         Route::get('/password/reset/{token}', ['as' => 'admin.password.reset', 'uses' => 'Auth\ResetPasswordController@showResetForm']);
 
         Route::get('/', ['as' => 'admin.home', 'uses' => 'AdminController@index']);
+
+        Route::resource('permissions', 'Auth\PermissionController', [
+            'names' => [
+                'index' => 'admin.permissions',
+                'create' => 'admin.permission.create',
+                'store' => 'admin.permission.store',
+                'edit' => 'admin.permission.edit',
+                'update' => 'admin.permission.update',
+                'destroy' => 'admin.permission.destroy',
+            ],
+            'except' => ['view'],
+        ]);
+
+        Route::get('/permissions/delete/{id}', ['as' => 'admin.permission.delete', 'uses' => 'Auth\PermissionController@delete']);
     });
 });

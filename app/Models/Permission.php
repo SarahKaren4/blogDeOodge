@@ -1,10 +1,10 @@
 <?php
 
-namespace App/Models;
+namespace App\Models;
 
 use Laratrust\LaratrustPermission;
 
 class Permission extends LaratrustPermission
 {
-    //
+    
 }

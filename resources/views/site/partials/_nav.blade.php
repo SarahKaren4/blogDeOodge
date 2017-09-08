@@ -57,7 +57,7 @@
 
                     <ul class="dropdown-menu" role="menu">
                         @foreach(config('app.locales') as $key => $value)
-                            <li><a href="/{{ $key }}/{{ Route::currentRouteName() }}">{{ $value }}</a></li>
+                            <li><a href="/{{ $key }}/{{ substr(Request::path(), 3) }}">{{ $value }}</a></li>
                         @endforeach
                     </ul>
 
