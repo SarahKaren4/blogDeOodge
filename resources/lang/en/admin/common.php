@@ -11,5 +11,6 @@ return [
     'menu' => [
         'users' => 'Users',
         'permissions' => 'Permissions',
+        'roles' => 'Roles',
     ],
 ];

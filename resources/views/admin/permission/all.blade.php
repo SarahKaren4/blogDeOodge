@@ -31,8 +31,8 @@
                             <tr>
                                 <th>@lang('admin/user.tables.id')</th>
                                 <th>@lang('admin/user.tables.permission')</th>
-                                <th>@lang('admin/user.tables.permission_name')</th>
-                                <th>@lang('admin/user.tables.permission_description')</th>
+                                <th>@lang('admin/user.tables.name')</th>
+                                <th>@lang('admin/user.tables.description')</th>
                                 <th>@lang('admin/user.tables.dates')</th>
                                 <th>@lang('admin/user.tables.actions')</th>
                             </tr>
@@ -59,11 +59,13 @@
                 </div>
             </div>
 
-            <div class="panel panel-default">
-                <div class="panel-body text-center">
-                    {{ $permissions->links() }}
+            @if($permissions->lastPage() > 1)
+                <div class="panel panel-default">
+                    <div class="panel-body text-center">
+                        {{ $permissions->links() }}
+                    </div>
                 </div>
-            </div>
+            @endif
 
         </div>
     </div>

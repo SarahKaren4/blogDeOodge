@@ -21,7 +21,7 @@ class PermissionController extends \App\Http\Controllers\Controller
     {
         $permissions = Permission::orderBy('id', 'desc')->paginate(10);
 
-        return view('admin.user.permissions')->with('permissions', $permissions);
+        return view('admin.permission.all')->with('permissions', $permissions);
     }
 
     /**
@@ -31,7 +31,7 @@ class PermissionController extends \App\Http\Controllers\Controller
      */
     public function create()
     {
-        return view('admin.user.permission_create');
+        return view('admin.permission.create');
     }
 
     /**
@@ -44,14 +44,14 @@ class PermissionController extends \App\Http\Controllers\Controller
     {
 
         $request->validate([
-            'name' => 'required|min:5|max:255|unique:permissions',
-            'display_name' => 'required|min:5|max:255',
-            'description' => 'required|min:5|max:255',
+            'name'              => 'required|min:5|max:255|unique:permissions|alpha_dash',
+            'display_name'      => 'required|min:5|max:255',
+            'description'       => 'required|min:5|max:255',
         ]);
 
-        $permission = New Permission;
+        $permission = New Permission();
 
-        $permission->name = $request->name;
+        $permission->name = strtolower($request->name);
         $permission->display_name = $request->display_name;
         $permission->description = $request->description;
 
@@ -70,9 +70,9 @@ class PermissionController extends \App\Http\Controllers\Controller
      */
     public function edit($id)
     {
-        $permission = Permission::find($id);
+        $permission = Permission::findOrFail($id);
 
-        return view('admin.user.permission_edit')->with('permission', $permission);
+        return view('admin.permission.edit')->with('permission', $permission);
     }
 
     /**
@@ -85,11 +85,11 @@ class PermissionController extends \App\Http\Controllers\Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'display_name' => 'required|min:5|max:255',
-            'description' => 'required|min:5|max:255',
+            'display_name'  => 'required|min:5|max:255',
+            'description'   => 'required|min:5|max:255',
         ]);
 
-        $permission = Permission::find($id);
+        $permission = Permission::findOrFail($id);
         $redirectUrl = $request->redirect_to;
 
         $permission->display_name = $request->display_name;
@@ -104,9 +104,9 @@ class PermissionController extends \App\Http\Controllers\Controller
 
     public function delete($id)
     {
-        $permission = Permission::find($id);
+        $permission = Permission::findOrFail($id);
 
-        return view('admin.user.permission_delete')->with('permission', $permission);
+        return view('admin.permission.delete')->with('permission', $permission);
     }
 
     /**
@@ -117,7 +117,7 @@ class PermissionController extends \App\Http\Controllers\Controller
      */
     public function destroy(Request $request, $id)
     {
-        $permission = Permission::find($id);
+        $permission = Permission::findOrFail($id);
         $redirectUrl = $request->redirect_to;
 
         $permission->roles()->detach();
@@ -126,7 +126,7 @@ class PermissionController extends \App\Http\Controllers\Controller
 
         $permission->delete();
 
-        $request->session()->flash('success', 'Great! Permission has been deleted successfully');
+        $request->session()->flash('success', 'Great! The permission has been deleted successfully');
 
         return redirect()->to($redirectUrl);
     }

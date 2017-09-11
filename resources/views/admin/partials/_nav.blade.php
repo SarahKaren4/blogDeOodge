@@ -26,6 +26,7 @@
 
                     <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ route('admin.permissions') }}">@lang('admin/common.menu.permissions')</a></li>
+                            <li><a href="{{ route('admin.roles') }}">@lang('admin/common.menu.roles')</a></li>
                     </ul>
 
                 </li>

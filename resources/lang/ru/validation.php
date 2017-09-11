@@ -18,7 +18,7 @@ return [
     'after'                => ':attribute должен быть позже :date.',
     'after_or_equal'       => ':attribute должен быть больше или равен :date.',
     'alpha'                => ':attribute может содержать только буквы.',
-    'alpha_dash'           => ':attribute может содержать только буквы, цифры и тире.',
+    'alpha_dash'           => 'Атрибут ":attribute" может содержать только буквы, цифры и дефисы.',
     'alpha_num'            => ':attribute может содержать только буквы и цифры.',
     'array'                => ':attribute должен быть массивом.',
     'before'               => ':attribute должен быть ранее :date.',
