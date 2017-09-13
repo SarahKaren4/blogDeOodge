@@ -26,9 +26,9 @@
 
                     <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ route('admin.admins') }}"><i class="fa fa-circle-o"></i>&nbsp;&nbsp;@lang('admin/common.menu.admin_users')</a></li>
-                            <li><a href=""><i class="fa fa-circle-o"></i>&nbsp;&nbsp;@lang('admin/common.menu.site_users')</a></li>
-                            <li><a href="{{ route('admin.permissions') }}"><i class="fa fa-circle-o"></i>&nbsp;&nbsp;@lang('admin/common.menu.permissions')</a></li>
+                            <li><a href="{{ route('admin.users') }}"><i class="fa fa-circle-o"></i>&nbsp;&nbsp;@lang('admin/common.menu.site_users')</a></li>
                             <li><a href="{{ route('admin.roles') }}"><i class="fa fa-circle-o"></i>&nbsp;&nbsp;@lang('admin/common.menu.roles')</a></li>
+                            <li><a href="{{ route('admin.permissions') }}"><i class="fa fa-circle-o"></i>&nbsp;&nbsp;@lang('admin/common.menu.permissions')</a></li>
                     </ul>
 
                 </li>

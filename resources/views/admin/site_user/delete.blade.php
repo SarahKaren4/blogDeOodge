@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    @lang('admin/user.titles.admin_user_delete') "{{ $admin->name }}" ?
+    @lang('admin/user.titles.site_user_delete') "{{ $user->name }}" ?
 @endsection
 
 
@@ -13,7 +13,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-body">
-                        <h3 style="margin:0">@lang('admin/user.titles.admin_user_delete') "{{ $admin->name }}" ?</h3>
+                        <h3 style="margin:0">@lang('admin/user.titles.site_user_delete') "{{ $user->name }}" ?</h3>
                 </div>
             </div>
 
@@ -23,9 +23,7 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
 
-                            @if($admin->allPermissions()->count() || $admin->roles()->count())
-                                <div class="alert alert-danger" role="alert">@lang('admin/user.texts.warning_relations')</div>
-                            @endif
+                            <!--<div class="alert alert-danger" role="alert">@lang('admin/user.texts.warning_relations')</div>-->
 
                             <table class="table">
                                 <thead>
@@ -34,12 +32,8 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>@lang('admin/user.tables.permissions')</td>
-                                        <td>{{ $admin->allPermissions()->count() }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>@lang('admin/user.tables.roles')</td>
-                                        <td>{{ $admin->roles()->count() }}</td>
+                                        <td></td>
+                                        <td></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -51,7 +45,7 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <form action="{{ route('admin.admin.destroy', ['id' => $admin->id]) }}" method="POST">
+                                    <form action="{{ route('admin.user.destroy', ['id' => $user->id]) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
                                         <input type="text" name="redirect_to" hidden value="{{ URL::previous() }}">

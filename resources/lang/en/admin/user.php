@@ -16,6 +16,11 @@ return [
         'admin_user_edit' => 'Edit administrator account',
         'admin_user_show' => 'View administrator account',
         'admin_user_delete' => 'Delete administrator account',
+        'site_users' => 'Site users',
+        'site_user_create' => 'Create user account',
+        'site_user_show' => 'View user account',
+        'site_user_edit' => 'Edit user account',
+        'site_user_delete' => 'Delete user account',
     ],
     'tables' => [
         'id' => 'ID',
@@ -51,5 +56,20 @@ return [
     'buttons' => [
         'role_back' => 'Back to the list of roles',
         'admin_back' => 'Back to the list of admins',
+        'user_back' => 'Back to the list of users',
+    ],
+    'alerts' => [
+        'role_store_success' => 'Great! New role has been created successfully',
+        'role_update_success' => 'Great! The role has been updated successfully',
+        'role_delete_success' => 'Great! The role has been deleted successfully',
+        'permission_store_success' => 'Great! New permission has been created successfully',
+        'permission_update_success' => 'Great! The permission has been updated successfully',
+        'permission_delete_success' => 'Great! The permission has been deleted successfully',
+        'admin_user_store_success' => 'Great! New admin user has been created successfully',
+        'admin_user_update_success' => 'Great! The admin user has been updated successfully',
+        'admin_user_delete_success' => 'Great! The admin user has been deleted successfully',
+        'site_user_store_success' => 'Great! New site user has been created successfully',
+        'site_user_update_success' => 'Great! The site user has been updated successfully',
+        'site_user_delete_success' => 'Great! The site user has been deleted successfully',
     ],
 ];

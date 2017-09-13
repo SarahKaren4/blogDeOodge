@@ -36,7 +36,7 @@ class PermissionController extends \App\Http\Controllers\Controller
 
         $permissionModel->storePermission($request);
 
-        $request->session()->flash('success', 'Great! New permission has been created successfully');
+        $request->session()->flash('success', __('admin/user.alerts.permission_store_success'));
 
         return redirect()->route('admin.permissions');
     }
@@ -59,7 +59,7 @@ class PermissionController extends \App\Http\Controllers\Controller
 
         $permissionModel->updatePermission($request, $id);
 
-        $request->session()->flash('success', 'Great! Permission has been updated successfully');
+        $request->session()->flash('success', __('admin/user.alerts.permission_update_success'));
 
         return redirect()->to($request->redirect_to);
     }
@@ -77,7 +77,7 @@ class PermissionController extends \App\Http\Controllers\Controller
     {
         $permissionModel->destroyPermission($id);
 
-        $request->session()->flash('success', 'Great! The permission has been deleted successfully');
+        $request->session()->flash('success', __('admin/user.alerts.permission_delete_success'));
 
         return redirect()->to($request->redirect_to);
     }

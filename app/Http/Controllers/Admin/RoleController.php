@@ -13,11 +13,6 @@ class RoleController extends \App\Http\Controllers\Controller
         $this->middleware('admin');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Role $roleModel)
     {
         $roles = $roleModel->getRolesList();
@@ -27,11 +22,6 @@ class RoleController extends \App\Http\Controllers\Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Permission $permissionModel)
     {
 
@@ -42,12 +32,6 @@ class RoleController extends \App\Http\Controllers\Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request, Role $roleModel)
     {
         $request->validate([
@@ -59,17 +43,11 @@ class RoleController extends \App\Http\Controllers\Controller
 
         $roleModel->storeRole($request);
 
-        $request->session()->flash('success', 'Great! New role has been created successfully');
+        $request->session()->flash('success', __('admin/user.alerts.role_store_success'));
 
         return redirect()->route('admin.roles');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Role $roleModel, $id)
     {
         $role = $roleModel->getRoleById($id);
@@ -79,12 +57,6 @@ class RoleController extends \App\Http\Controllers\Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Request $request, Role $roleModel, Permission $permissionModel, $id)
     {
         $data = [];
@@ -101,13 +73,6 @@ class RoleController extends \App\Http\Controllers\Controller
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Role $roleModel, $id)
     {
         $request->validate([
@@ -118,7 +83,7 @@ class RoleController extends \App\Http\Controllers\Controller
 
         $roleModel->updateRole($request, $id);
 
-        $request->session()->flash('success', 'Great! New role has been updated successfully');
+        $request->session()->flash('success', __('admin/user.alerts.role_update_success'));
 
         return redirect()->to($request->redirect_to);
     }
@@ -132,17 +97,11 @@ class RoleController extends \App\Http\Controllers\Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request, Role $roleModel, $id)
     {
         $roleModel->destroyRole($id);
 
-        $request->session()->flash('success', 'Great! The role has been deleted successfully');
+        $request->session()->flash('success', __('admin/user.alerts.role_delete_success'));
 
         return redirect()->to($request->redirect_to);
     }

@@ -8,6 +8,7 @@ Route::namespace('Site')->group(function () {
 Route::namespace('Admin')->group(function () {
     Route::prefix('admin')->group(function () {
 
+        // Authentication for admin users
         Route::get('/login', ['as' => 'admin.login', 'uses' => 'Auth\LoginController@showLoginForm']);
         Route::post('/login', ['as' => 'admin.login.submit', 'uses' => 'Auth\LoginController@login']);
         Route::post('/logout', ['as' => 'admin.logout', 'uses' => 'Auth\LoginController@logout']);
@@ -16,8 +17,10 @@ Route::namespace('Admin')->group(function () {
         Route::post('/password/reset', ['as' => 'admin.password.reset.request', 'uses' => 'Auth\ResetPasswordController@reset']);
         Route::get('/password/reset/{token}', ['as' => 'admin.password.reset', 'uses' => 'Auth\ResetPasswordController@showResetForm']);
 
+        // Main admin page
         Route::get('/', ['as' => 'admin.home', 'uses' => 'AdminController@index']);
 
+        // Permissions CRUD
         Route::resource('permissions', 'PermissionController', [
             'names' => [
                 'index' => 'admin.permissions',
@@ -31,6 +34,7 @@ Route::namespace('Admin')->group(function () {
         ]);
         Route::get('/permissions/delete/{id}', ['as' => 'admin.permission.delete', 'uses' => 'PermissionController@delete']);
 
+        //Roles CRUD
         Route::resource('roles', 'RoleController', [
             'names' => [
                 'index' => 'admin.roles',
@@ -44,6 +48,7 @@ Route::namespace('Admin')->group(function () {
         ]);
         Route::get('/roles/delete/{id}', ['as' => 'admin.role.delete', 'uses' => 'RoleController@delete']);
 
+        // Admin users CRUD
         Route::resource('admins', 'AdminUserController', [
             'names' => [
                 'index' => 'admin.admins',
@@ -56,5 +61,19 @@ Route::namespace('Admin')->group(function () {
             ],
         ]);
         Route::get('/admins/delete/{id}', ['as' => 'admin.admin.delete', 'uses' => 'AdminUserController@delete']);
+
+        // Site users CRUD
+        Route::resource('users', 'SiteUserController', [
+            'names' => [
+                'index' => 'admin.users',
+                'show' => 'admin.user.show',
+                'create' => 'admin.user.create',
+                'store' => 'admin.user.store',
+                'edit' => 'admin.user.edit',
+                'update' => 'admin.user.update',
+                'destroy' => 'admin.user.destroy',
+            ],
+        ]);
+        Route::get('/users/delete/{id}', ['as' => 'admin.user.delete', 'uses' => 'SiteUserController@delete']);
     });
 });
