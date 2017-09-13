@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Auth;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\Role;
@@ -18,11 +18,13 @@ class RoleController extends \App\Http\Controllers\Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Role $roleModel)
     {
-        $roles = Role::orderBy('name')->paginate(10);
+        $roles = $roleModel->getRolesList();
 
-        return view('admin.role.all')->with('roles', $roles);
+        return view('admin.role.all', [
+            'roles' => $roles,
+        ]);
     }
 
     /**
@@ -30,12 +32,14 @@ class RoleController extends \App\Http\Controllers\Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Permission $permissionModel)
     {
 
-        $permissions = Permission::orderBy('id', 'desc')->get();
+        $permissions = $permissionModel->getPermissions();
 
-        return view('admin.role.create')->with('permissions', $permissions);
+        return view('admin.role.create', [
+            'permissions' => $permissions,
+        ]);
     }
 
     /**
@@ -44,7 +48,7 @@ class RoleController extends \App\Http\Controllers\Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Role $roleModel)
     {
         $request->validate([
             'name'              => 'required|min:3|max:255|unique:roles|alpha_dash',
@@ -53,15 +57,7 @@ class RoleController extends \App\Http\Controllers\Controller
             'permissions'       => 'required|Array',
         ]);
 
-        $role = New Role();
-
-        $role->name = strtolower($request->name);
-        $role->display_name = $request->display_name;
-        $role->description = $request->description;
-
-        $role->save();
-
-        $role->permissions()->attach($request->permissions);
+        $roleModel->storeRole($request);
 
         $request->session()->flash('success', 'Great! New role has been created successfully');
 
@@ -74,11 +70,13 @@ class RoleController extends \App\Http\Controllers\Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Role $roleModel, $id)
     {
-        $role = Role::findOrFail($id);
+        $role = $roleModel->getRoleById($id);
 
-        return view('admin.role.show')->with('role', $role);
+        return view('admin.role.show', [
+            'role' => $role,
+        ]);
     }
 
     /**
@@ -87,12 +85,12 @@ class RoleController extends \App\Http\Controllers\Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, $id)
+    public function edit(Request $request, Role $roleModel, Permission $permissionModel, $id)
     {
         $data = [];
 
-        $role = Role::findOrFail($id);
-        $permissions = Permission::orderBy('id', 'desc')->get();
+        $role = $roleModel->getRoleById($id);
+        $permissions = $permissionModel->getPermissions();
         $checkedPermissions = $role->permissions->pluck('id')->toArray();
 
         return view('admin.role.edit', [
@@ -110,7 +108,7 @@ class RoleController extends \App\Http\Controllers\Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $roleModel, $id)
     {
         $request->validate([
             'display_name'      => 'required|min:3|max:255',
@@ -118,23 +116,16 @@ class RoleController extends \App\Http\Controllers\Controller
             'permissions'       => 'required|Array',
         ]);
 
-        $role = Role::findorFail($id);
-        $redirectTo = $request->redirect_to;
-
-        $role->display_name = $request->display_name;
-        $role->description = $request->description;
-
-        $role->save();
-        $role->permissions()->sync($request->permissions);
+        $roleModel->updateRole($request, $id);
 
         $request->session()->flash('success', 'Great! New role has been updated successfully');
 
-        return redirect()->to($redirectTo);
+        return redirect()->to($request->redirect_to);
     }
 
-    public function delete($id)
+    public function delete(Role $roleModel, $id)
     {
-        $role = Role::findOrfail($id);
+        $role = $roleModel->getRoleById($id);
 
         return view('admin.role.delete', [
             'role' => $role,
@@ -147,19 +138,12 @@ class RoleController extends \App\Http\Controllers\Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, Role $roleModel, $id)
     {
-        $role = Role::findOrFail($id);
-        $redirectTo = $request->redirect_to;
-
-        $role->permissions()->detach();
-        $role->users()->detach();
-        $role->admins()->detach();
-
-        $role->delete();
+        $roleModel->destroyRole($id);
 
         $request->session()->flash('success', 'Great! The role has been deleted successfully');
 
-        return redirect()->to($redirectTo);
+        return redirect()->to($request->redirect_to);
     }
 }

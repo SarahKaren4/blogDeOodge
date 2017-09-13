@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    @lang('admin/user.titles.permission_delete') "{{ $permission->name }}" ?
+    @lang('admin/user.titles.admin_user_delete') "{{ $admin->name }}" ?
 @endsection
 
 
@@ -13,7 +13,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-body">
-                        <h3 style="margin:0">@lang('admin/user.titles.permission_delete') "{{ $permission->display_name }}" ?</h3>
+                        <h3 style="margin:0">@lang('admin/user.titles.admin_user_delete') "{{ $admin->name }}" ?</h3>
                 </div>
             </div>
 
@@ -23,9 +23,7 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
 
-                            @if($permission->roles()->count() || $permission->admins()->count() || $permission->users()->count())
-                                <div class="alert alert-danger" role="alert">@lang('admin/user.texts.warning_relations')</div>
-                            @endif
+                            <div class="alert alert-danger" role="alert">@lang('admin/user.texts.admin_relations')</div>
 
                             <table class="table">
                                 <thead>
@@ -34,16 +32,12 @@
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <td>@lang('admin/user.tables.permissions')</td>
+                                        <td>{{ $admin->allPermissions()->count() }}</td>
+                                    </tr>
+                                    <tr>
                                         <td>@lang('admin/user.tables.roles')</td>
-                                        <td>{{ $permission->roles()->count() }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>@lang('admin/user.tables.admins')</td>
-                                        <td>{{ $permission->admins()->count() }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>@lang('admin/user.tables.users')</td>
-                                        <td>{{ $permission->users()->count() }}</td>
+                                        <td>{{ $admin->roles()->count() }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -55,7 +49,7 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <form action="{{ route('admin.permission.destroy', ['id' => $permission->id]) }}" method="POST">
+                                    <form action="{{ route('admin.admin.destroy', ['id' => $admin->id]) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
                                         <input type="text" name="redirect_to" hidden value="{{ URL::previous() }}">

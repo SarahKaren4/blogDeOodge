@@ -1,6 +1,7 @@
 <?php
 return [
     'titles' => [
+        'info' => 'Information',
         'permissions' => 'User Permissions',
         'permission_create' => 'Create permission',
         'permission_delete' => 'Delete permission',
@@ -10,12 +11,18 @@ return [
         'role_show' => 'View role',
         'role_edit' => 'Edit role',
         'role_delete' => 'Delete role',
+        'admin_users' => 'Admin users',
+        'admin_user_create' => 'Create administrator account',
+        'admin_user_edit' => 'Edit administrator account',
+        'admin_user_show' => 'View administrator account',
+        'admin_user_delete' => 'Delete administrator account',
     ],
     'tables' => [
         'id' => 'ID',
         'permission' => 'Permission',
         'role' => 'Role',
         'name' => 'Name',
+        'first_name' => 'Name',
         'description' => 'Description',
         'actions' => 'Actions',
         'dates' => 'Createt/updated at',
@@ -25,17 +32,24 @@ return [
         'permissions' => 'Permissions',
         'users' => 'Users',
         'admins' => 'Admins',
+        'email' => 'E-mail',
     ],
     'labels' => [
         'name' => 'Alias',
         'display_name' => 'Name',
         'description' => 'Description',
+        'first_name' => 'Name',
+        'email' => 'E-mail',
+        'new_password' => 'New password',
+        'change_password' => 'Change password',
+        'role' => 'Role',
     ],
     'texts' => [
-        'permission_relations' => 'Current permission has relations. In case deleting you\'ll lose all those relations. If permission was hard-coded, it might call out some mistakes',
-        'role_relations' => 'Current role has relations. In case deleting you\'ll lose all those relations. If role was hard-coded, it might call out some mistakes',
+        'warning_relations' => 'Current item has relations. In case deleting you\'ll lose all those relations.',
+        'warning_important_relations' => 'Current item has important relations. You can\'t remove it at the moment. Try to clean those relations before deleting',
     ],
     'buttons' => [
         'role_back' => 'Back to the list of roles',
+        'admin_back' => 'Back to the list of admins',
     ],
 ];

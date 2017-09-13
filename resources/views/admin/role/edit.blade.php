@@ -18,17 +18,18 @@
                 </div>
             </div>
 
-            <div class="panel panel-default">
-                <div class="panel-body">
+            <form action="{{ route('admin.role.update', ['id' => $role->id]) }}" method="POST">
 
-                    <form action="{{ route('admin.role.update', ['id' => $role->id]) }}" method="POST">
+                <div class="row">
+                    <div class="col-md-6">
 
-                        <div class="row">
-                            <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><b>@lang('admin/user.titles.info'):</b></div>
+                            <div class="panel-body">
 
                                 {{ csrf_field() }}
                                 {{ method_field('PUT') }}
-                                <input type="text" name="redirect_to" value="{{ URL::previous() }}" hidden>
+                                <input type="text" name="redirect_to" value="{{ old('redirect_to') ? old('redirect_to') : URL::previous() }}" hidden>
                                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                                     <label for="name">@lang('admin/user.labels.name')</label>
                                     <input type="text" class="form-control" id="name" name="name" value="{{ $role->name }}" placeholder="@lang('admin/user.labels.name')" disabled>
@@ -58,10 +59,15 @@
                                 </div>
 
                             </div>
+                        </div>
 
-                            <div class="col-md-6 {{ $errors->has('description') ? 'has-error' : '' }}">
+                    </div>
 
-                                <b>@lang('admin/user.titles.permissions'):</b>
+                    <div class="col-md-6 {{ $errors->has('description') ? 'has-error' : '' }}">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><b>@lang('admin/user.titles.permissions'):</b></div>
+                            <div class="panel-body">
 
                                 <div style="overflow-y:scroll;height:200px;">
 
@@ -87,18 +93,24 @@
                             </div>
                         </div>
 
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-body">
+
                         <div class="row">
                             <div class="col-md-6">
                                 <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-save"></i> @lang('admin/common.buttons.save')</button>
                             </div>
                             <div class="col-md-6">
-                                <a href="{{ URL::previous() }}" class="btn btn-default btn-block"><i class="fa fa-times"></i> @lang('admin/common.buttons.cancel')</a>
+                                <a href="{{ old('redirect_to') ? old('redirect_to') : URL::previous() }}" class="btn btn-default btn-block"><i class="fa fa-times"></i> @lang('admin/common.buttons.cancel')</a>
                             </div>
                         </div>
-                    </form>
 
+                    </div>
                 </div>
-            </div>
+            </form>
 
         </div>
     </div>

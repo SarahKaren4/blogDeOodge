@@ -10,8 +10,6 @@ Route::namespace('Admin')->group(function () {
 
         Route::get('/login', ['as' => 'admin.login', 'uses' => 'Auth\LoginController@showLoginForm']);
         Route::post('/login', ['as' => 'admin.login.submit', 'uses' => 'Auth\LoginController@login']);
-        Route::get('/register', ['as' => 'admin.register', 'uses' => 'Auth\RegisterController@showRegistrationForm']);
-        Route::post('/register', ['as' => 'admin.register.submit', 'uses' => 'Auth\RegisterController@register']);
         Route::post('/logout', ['as' => 'admin.logout', 'uses' => 'Auth\LoginController@logout']);
         Route::post('/password/email', ['as' => 'admin.password.email', 'uses' => 'Auth\ForgotPasswordController@sendResetLinkEmail']);
         Route::get('/password/reset', ['as' => 'admin.password.request', 'uses' => 'Auth\ForgotPasswordController@showLinkRequestForm']);
@@ -20,7 +18,7 @@ Route::namespace('Admin')->group(function () {
 
         Route::get('/', ['as' => 'admin.home', 'uses' => 'AdminController@index']);
 
-        Route::resource('permissions', 'Auth\PermissionController', [
+        Route::resource('permissions', 'PermissionController', [
             'names' => [
                 'index' => 'admin.permissions',
                 'create' => 'admin.permission.create',
@@ -31,9 +29,9 @@ Route::namespace('Admin')->group(function () {
             ],
             'except' => ['view'],
         ]);
-        Route::get('/permissions/delete/{id}', ['as' => 'admin.permission.delete', 'uses' => 'Auth\PermissionController@delete']);
+        Route::get('/permissions/delete/{id}', ['as' => 'admin.permission.delete', 'uses' => 'PermissionController@delete']);
 
-        Route::resource('roles', 'Auth\RoleController', [
+        Route::resource('roles', 'RoleController', [
             'names' => [
                 'index' => 'admin.roles',
                 'show' => 'admin.role.show',
@@ -44,6 +42,19 @@ Route::namespace('Admin')->group(function () {
                 'destroy' => 'admin.role.destroy',
             ],
         ]);
-        Route::get('/roles/delete/{id}', ['as' => 'admin.role.delete', 'uses' => 'Auth\RoleController@delete']);
+        Route::get('/roles/delete/{id}', ['as' => 'admin.role.delete', 'uses' => 'RoleController@delete']);
+
+        Route::resource('admins', 'AdminUserController', [
+            'names' => [
+                'index' => 'admin.admins',
+                'show' => 'admin.admin.show',
+                'create' => 'admin.admin.create',
+                'store' => 'admin.admin.store',
+                'edit' => 'admin.admin.edit',
+                'update' => 'admin.admin.update',
+                'destroy' => 'admin.admin.destroy',
+            ],
+        ]);
+        Route::get('/admins/delete/{id}', ['as' => 'admin.admin.delete', 'uses' => 'AdminUserController@delete']);
     });
 });

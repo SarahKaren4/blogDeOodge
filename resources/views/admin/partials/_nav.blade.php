@@ -25,8 +25,10 @@
                     </a>
 
                     <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ route('admin.permissions') }}">@lang('admin/common.menu.permissions')</a></li>
-                            <li><a href="{{ route('admin.roles') }}">@lang('admin/common.menu.roles')</a></li>
+                            <li><a href="{{ route('admin.admins') }}"><i class="fa fa-circle-o"></i>&nbsp;&nbsp;@lang('admin/common.menu.admin_users')</a></li>
+                            <li><a href=""><i class="fa fa-circle-o"></i>&nbsp;&nbsp;@lang('admin/common.menu.site_users')</a></li>
+                            <li><a href="{{ route('admin.permissions') }}"><i class="fa fa-circle-o"></i>&nbsp;&nbsp;@lang('admin/common.menu.permissions')</a></li>
+                            <li><a href="{{ route('admin.roles') }}"><i class="fa fa-circle-o"></i>&nbsp;&nbsp;@lang('admin/common.menu.roles')</a></li>
                     </ul>
 
                 </li>
@@ -37,7 +39,6 @@
                 <!-- Authentication Links -->
                 @if (!Auth::guard('admin')->check())
                     <li><a href="{{ route('admin.login') }}"><i class="fa fa-sign-in"></i> @lang('common.login')</a></li>
-                    <li><a href="{{ route('admin.register') }}"><i class="fa fa-user-plus"></i> @lang('common.register')</a></li>
                 @else
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

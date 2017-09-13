@@ -45,8 +45,7 @@
                                     <td>{{ $role->display_name }}</td>
                                     <td>{{ $role->description }}</td>
                                     <td>
-                                        {{ date('j, m, Y | g:i a', strtotime($role->created_at)) }}<br>
-                                        {{ date('j, m, Y | g:i a', strtotime($role->created_at)) }}
+                                        {{ $role->created_at }}<br>{{ $role->updated_at }}
                                     </td>
                                     <td class="text-right">
                                         <a href="{{ route('admin.role.show', ['id' => $role->id]) }}" class="btn btn-default btn-sm"><i class="fa fa-eye"></i> @lang('admin/common.buttons.view')</a>

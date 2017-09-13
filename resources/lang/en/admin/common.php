@@ -12,5 +12,12 @@ return [
         'users' => 'Users',
         'permissions' => 'Permissions',
         'roles' => 'Roles',
+        'admin_users' => 'Admin users',
+        'site_users' => 'Site users',
+    ],
+    'labels' => [
+        'created_at' => 'Created at',
+        'updated_at' => 'Updated at',
+        'important' => 'Important',
     ],
 ];

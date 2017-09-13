@@ -45,8 +45,7 @@
                                     <td>{{ $permission->display_name }}</td>
                                     <td>{{ $permission->description }}</td>
                                     <td>
-                                        {{ date('j, m, Y | g:i a', strtotime($permission->created_at)) }}<br>
-                                        {{ date('j, m, Y | g:i a', strtotime($permission->created_at)) }}
+                                        {{ $permission->created_at }}<br>{{ $permission->updated_at }}
                                     </td>
                                     <td class="text-right">
                                         <a href="{{ route('admin.permission.edit', ['id' => $permission->id]) }}" class="btn btn-default btn-sm"><i class="fa fa-edit"></i> @lang('admin/common.buttons.edit')</a>

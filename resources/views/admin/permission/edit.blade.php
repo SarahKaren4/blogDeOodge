@@ -19,14 +19,15 @@
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
 
-                    <div class="panel panel-default">
-                        <div class="panel-body">
+                    <form action="{{ route('admin.permission.update', ['id' => $permission->id]) }}" method="POST">
 
-                            <form action="{{ route('admin.permission.update', ['id' => $permission->id]) }}" method="POST">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+
                                 {{ csrf_field() }}
                                 {{ method_field('PUT') }}
 
-                                <input type="text" hidden name="redirect_to" value="{{ URL::previous() }}">
+                                <input type="text" hidden name="redirect_to" value="{{ old('redirect_to') ? old('redirect_to') : URL::previous() }}">
 
                                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                                     <label for="name">@lang('admin/user.labels.name')</label>
@@ -56,18 +57,25 @@
                                     @endif
                                 </div>
 
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-save"></i> @lang('admin/common.buttons.save')</button>
                                     </div>
                                     <div class="col-md-6">
-                                        <a href="{{ URL::previous() }}" class="btn btn-default btn-block"><i class="fa fa-times"></i> @lang('admin/common.buttons.cancel')</a>
+                                        <a href="{{ old('redirect_to') ? old('redirect_to') : URL::previous() }}" class="btn btn-default btn-block"><i class="fa fa-times"></i> @lang('admin/common.buttons.cancel')</a>
                                     </div>
                                 </div>
-                            </form>
 
+                            </div>
                         </div>
-                    </div>
+                    </form>
+
                 </div>
             </div>
 

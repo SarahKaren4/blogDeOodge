@@ -15,8 +15,19 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
+//Vue.component('example', require('./components/Example.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    methods: {
+        greet: function (event) {
+            if(event.target.checked) {
+                $('#new_password').show()
+                $('#new_password input').prop('disabled', false)
+            } else {
+                $('#new_password').hide()
+                $('#new_password input').prop('disabled', true)
+            }
+        }
+    },
 });
