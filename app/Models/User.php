@@ -102,4 +102,9 @@ class User extends Authenticatable
     {
         $this->attributes['name'] = ucfirst($value);
     }
+
+    public function comments()
+    {
+        return $this->morphMany('App\Model\Comment', 'user');
+    }
 }

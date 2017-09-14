@@ -32,6 +32,16 @@
                     </ul>
 
                 </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <i class="fa fa-th-list"></i> @lang('admin/common.menu.blog')<span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ route('admin.posts') }}"><i class="fa fa-circle-o"></i>&nbsp;&nbsp;@lang('admin/common.menu.posts')</a></li>
+                    </ul>
+
+                </li>
             </ul>
 
             <!-- Right Side Of Navbar -->

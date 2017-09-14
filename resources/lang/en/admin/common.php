@@ -14,6 +14,8 @@ return [
         'roles' => 'Roles',
         'admin_users' => 'Admin users',
         'site_users' => 'Site users',
+        'blog' => 'Blog',
+        'posts' => 'Posts',
     ],
     'labels' => [
         'created_at' => 'Created at',

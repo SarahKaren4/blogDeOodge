@@ -75,5 +75,19 @@ Route::namespace('Admin')->group(function () {
             ],
         ]);
         Route::get('/users/delete/{id}', ['as' => 'admin.user.delete', 'uses' => 'SiteUserController@delete']);
+
+        // Posts CRUD
+        Route::resource('posts', 'PostController', [
+            'names' => [
+                'index' => 'admin.posts',
+                'show' => 'admin.post.show',
+                'create' => 'admin.post.create',
+                'store' => 'admin.post.store',
+                'edit' => 'admin.post.edit',
+                'update' => 'admin.post.update',
+                'destroy' => 'admin.post.destroy',
+            ],
+        ]);
+        Route::get('/posts/delete/{id}', ['as' => 'admin.post.delete', 'uses' => 'PostController@delete']);
     });
 });

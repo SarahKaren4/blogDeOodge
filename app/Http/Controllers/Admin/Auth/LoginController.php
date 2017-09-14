@@ -46,13 +46,21 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $this->validateLogin($request);
+        $validate = $this->validateLogin($request);
+
+        if ($this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+
+            return $this->sendLockoutResponse($request);
+        }
 
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
             return redirect()->route('admin.home');
         }
 
-        return redirect()->back()->withInput($request->only('email', 'remember'));
+        $this->incrementLoginAttempts($request);
+
+        return $this->sendFailedLoginResponse($request);;
     }
 
     public function logout(Request $request)

@@ -107,4 +107,14 @@ class Admin extends Authenticatable
     {
         $this->attributes['name'] = ucfirst($value);
     }
+
+    public function comments()
+    {
+        return $this->morphMany('App\Model\Comment', 'user');
+    }
+
+    public function posts()
+    {
+        return $this->hasMany('App\Models\Post');
+    }
 }
