@@ -9,6 +9,9 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+// mix.js('node_modules/moment/src/moment.js', 'public/js');
+// mix.js('node_modules/moment/locale/ru.js', 'public/js');
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

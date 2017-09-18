@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Category;
 
 class PostController extends \App\Http\Controllers\Controller
 {
@@ -31,9 +32,13 @@ class PostController extends \App\Http\Controllers\Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Category $categoryModel)
     {
-        //
+        $categories = $categoryModel->getCategories();
+
+        return view('admin.post.create', [
+            'categories' => $categories,
+        ]);
     }
 
     /**

@@ -50,7 +50,7 @@
                                         </ul>
                                     </td>
                                     <td>{{ $post->user->name }}</td>
-                                    <td>{{ $post->comments->count() }}</td>
+                                    <td>{{ $post->comments()->count() }}</td>
                                     <td class="text-right">
                                         <a href="{{ route('admin.post.show', ['id' => $post->id]) }}" class="btn btn-default btn-sm"><i class="fa fa-eye"></i> @lang('admin/common.buttons.view')</a>
                                         <a href="{{ route('admin.post.edit', ['id' => $post->id]) }}" class="btn btn-default btn-sm"><i class="fa fa-edit"></i> @lang('admin/common.buttons.edit')</a>

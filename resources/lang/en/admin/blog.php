@@ -1,7 +1,10 @@
 <?php
 return [
     'titles' => [
+        'info' => 'Information',
+        'categories' => 'Categories',
         'posts' => 'Posts',
+        'posts_create' => 'Create post',
     ],
     'tables' => [
         'id' => 'ID',
@@ -12,7 +15,8 @@ return [
         'comments' => 'Comments',
     ],
     'labels' => [
-
+        'slug' => 'Slug',
+        'created_at' => 'Created at',
     ],
     'texts' => [
 

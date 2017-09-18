@@ -3,12 +3,30 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+use App;
 
 class Post extends Model
 {
+    use \Dimsav\Translatable\Translatable;
+
+    public $translatedAttributes = ['title', 'description', 'meta_title', 'meta_description'];
+    protected $fillable = ['slug', 'image', 'status'];
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->defaultLocale = App::getLocale();
+    }
+
     public function getPostsList()
     {
-        return $this->sort()->paginate(10);
+        return $this->sort()->translatedIn()->paginate(10);
+    }
+
+    public function getPosts()
+    {
+        return $this->sort()->translatedIn()->get();
     }
 
     public function scopeSort($query)
@@ -16,9 +34,9 @@ class Post extends Model
         $query->latest('id');
     }
 
-    public function comments()
+    public function user()
     {
-        return $this->hasMany('App\Models\Comment');
+        return $this->belongsTo('App\Models\Admin');
     }
 
     public function categories()
@@ -26,8 +44,8 @@ class Post extends Model
         return $this->belongsToMany('App\Models\Category');
     }
 
-    public function user()
+    public function comments()
     {
-        return $this->belongsTo('App\Models\Admin');
+        return $this->hasMany('App\Models\Comment');
     }
 }
