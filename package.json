@@ -19,8 +19,6 @@
         "vue": "^2.1.10"
     },
     "dependencies": {
-        "bootstrap-datetimepicker-npm": "^4.17.37-npm",
-        "font-awesome": "^4.7.0",
-        "moment": "^2.18.1"
+        "font-awesome": "^4.7.0"
     }
 }

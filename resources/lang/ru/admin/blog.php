@@ -17,6 +17,11 @@ return [
     'labels' => [
         'slug' => 'Алиас',
         'created_at' => 'Дата создания',
+        'status' => 'Статус',
+        'title' => 'Заголовок',
+        'description' => 'Статья',
+        'meta-title' => 'Мета заголовок',
+        'meta-description' => 'Мета описание',
     ],
     'texts' => [
 
@@ -25,6 +30,6 @@ return [
 
     ],
     'alerts' => [
-
+        'post_store_success' => 'Отлично! Новый пост был успешно создан',
     ],
 ];

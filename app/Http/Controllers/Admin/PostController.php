@@ -47,9 +47,29 @@ class PostController extends \App\Http\Controllers\Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Post $postModel)
     {
-        //
+        $validateArray = [
+            'slug' => 'required|unique:posts|alpha_dash|max:150|regex:/^[a-zA-z0-9\-\_]+$/',
+            'created_at' => 'required|date|date_format:j.m.Y g:i:s a',
+            'status' => 'required|integer|max:1',
+            'categories' => 'required|array',
+        ];
+
+        foreach (config('translatable.locales') as $lang) {
+            $validateArray['title-' . $lang] = 'required|max:150';
+            $validateArray['description-' . $lang] = 'required';
+            $validateArray['meta-title-' . $lang] = 'required|max:150';
+            $validateArray['meta-description-' . $lang] = 'required|max:200';
+        }
+
+        $request->validate($validateArray);
+
+        $postModel->storePost($request);
+
+        $request->session()->flash('success', __('admin/blog.alerts.post_store_success'));
+
+        return redirect()->route('admin.posts');
     }
 
     /**

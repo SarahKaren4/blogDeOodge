@@ -17,6 +17,11 @@ return [
     'labels' => [
         'slug' => 'Slug',
         'created_at' => 'Created at',
+        'status' => 'Status',
+        'title' => 'Title',
+        'description' => 'Article',
+        'meta-title' => 'Meta title',
+        'meta-description' => 'Meta description',
     ],
     'texts' => [
 
@@ -25,6 +30,6 @@ return [
 
     ],
     'alerts' => [
-
+        'post_store_success' => 'Great! New post has been created successfully',
     ],
 ];

@@ -24,7 +24,7 @@
             <form action="{{ route('admin.post.store') }}" method="POST">
 
                 {{ csrf_field() }}
-                <input type="text" name="redirect_to" value="{{ old('redirect_to') ? old('redirect_to') : URL::previous() }}" hidden>
+                <input type="text" name="redirect_to" value="{{ old('redirect_to', URL::previous()) }}" hidden>
 
                 <div class="row">
                     <div class="col-md-6">
@@ -45,10 +45,27 @@
 
                                 <div class="form-group {{ $errors->has('created_at') ? 'has-error' : '' }}">
                                     <label for="created_at">@lang('admin/blog.labels.created_at')</label>
-                                    <input type="text" class="form-control" id="created_at" name="created_at" value="{{ old('created_at') ? old('created_at') : date('j.m.Y g:i:s a') }}" placeholder="@lang('admin/blog.labels.created_at')" autofocus>
+                                    <input type="text" class="form-control" id="created_at" name="created_at" value="{{ old('created_at', date('j.m.Y g:i:s a')) }}" placeholder="@lang('admin/blog.labels.created_at')" autofocus>
                                     @if ($errors->has('created_at'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('created_at') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+
+                                <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
+                                    <label for="status">@lang('admin/blog.labels.status')</label><br>
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-default active">
+                                            <input value="1" name="status" type="radio" autocomplete="off" checked> <i class="fa fa-check-square-o"></i> Active
+                                        </label>
+                                        <label class="btn btn-default">
+                                            <input value="0" name="status" type="radio" autocomplete="off"> <i class="fa fa-ban"></i> Disabled
+                                        </label>
+                                    </div>
+                                    @if ($errors->has('status'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('status') }}</strong>
                                         </span>
                                     @endif
                                 </div>
@@ -64,17 +81,23 @@
                             <div class="panel-heading"><b>@lang('admin/blog.titles.categories'):</b></div>
                             <div class="panel-body">
 
-                                <div style="overflow-y:scroll;height:200px;">
+                                <div style="overflow-y:scroll;height:200px;" class="{{ $errors->has('categories') ? 'has-error' : '' }}">
 
-                                @foreach($categories as $category)
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="{{ $category->id }}" name="categories[]"
-                                        {{ is_array(old("categories")) && in_array($category->id, old("categories")) ? "checked" : "" }}>
-                                        {{ $category->title }}
-                                    </label>
-                                </div>
-                                @endforeach
+                                    @foreach($categories as $category)
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" value="{{ $category->id }}" name="categories[]"
+                                            {{ is_array(old("categories")) && in_array($category->id, old("categories")) ? "checked" : "" }}>
+                                            {{ $category->title }}
+                                        </label>
+                                    </div>
+                                    @endforeach
+
+                                    @if ($errors->has('categories'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('categories') }}</strong>
+                                        </span>
+                                    @endif
 
                                 </div>
 
@@ -88,23 +111,89 @@
                     <div class="col-md-12">
 
                         <div class="panel panel-default">
-                            <div class="panel-heading"><b>@lang('admin/blog.titles.categories'):</b></div>
+                            <div class="panel-heading"><b>@lang('admin/blog.titles.info'):</b></div>
                             <div class="panel-body">
 
                                 <div>
 
                                   <!-- Nav tabs -->
                                   <ul class="nav nav-tabs" role="tablist">
-                                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-                                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+                                      @foreach(config('translatable.locales') as $locale)
+                                          <li role="presentation" class="{{ $loop->first ? 'active' : '' }}">
+                                              <a href="#{{ $locale }}" aria-controls="{{ $locale }}" role="tab" data-toggle="tab">
+                                                  <i class="fa fa-language"></i> {{ strtoupper($locale) }}
+                                              </a>
+                                          </li>
+                                      @endforeach
                                   </ul>
 
                                   <!-- Tab panes -->
                                   <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane active" id="home">fdghfhgfjhg</div>
-                                    <div role="tabpanel" class="tab-pane" id="profile">54646456</div>
+                                      @foreach(config('translatable.locales') as $locale)
+                                          <div role="tabpanel" class="tab-pane {{ $loop->first ? 'active' : '' }}" id="{{ $locale }}">
+
+                                              <br>
+                                              <div class="form-group {{ $errors->has('title-'.$locale.'') ? 'has-error' : '' }}">
+                                                  <label for="title-{{ $locale }}">@lang('admin/blog.labels.title')</label>
+                                                  <input type="text" class="form-control" id="title-{{ $locale }}" name="title-{{ $locale }}" value="{{ old('title-'.$locale.'') }}" placeholder="@lang('admin/blog.labels.title')">
+                                                  @if ($errors->has("title-$locale"))
+                                                      <span class="help-block">
+                                                          <strong>{{ $errors->first("title-$locale") }}</strong>
+                                                      </span>
+                                                  @endif
+                                              </div>
+
+                                              <div class="form-group {{ $errors->has('description-'.$locale.'') ? 'has-error' : '' }}">
+                                                  <label for="description-{{ $locale }}">@lang('admin/blog.labels.description')</label>
+                                                  <textarea style="height:300px;" class="form-control" id="description-{{ $locale }}" name="description-{{ $locale }}" placeholder="@lang('admin/blog.labels.description')">
+                                                      {{ old('description-'.$locale.'') }}
+                                                  </textarea>
+                                                  @if ($errors->has("description-$locale"))
+                                                      <span class="help-block">
+                                                          <strong>{{ $errors->first("description-$locale") }}</strong>
+                                                      </span>
+                                                  @endif
+                                              </div>
+
+                                              <div class="form-group {{ $errors->has('meta-title-'.$locale.'') ? 'has-error' : '' }}">
+                                                  <label for="meta-title-{{ $locale }}">@lang('admin/blog.labels.meta-title')</label>
+                                                  <input type="text" class="form-control" id="meta-title-{{ $locale }}" name="meta-title-{{ $locale }}" value="{{ old('meta-title-'.$locale.'') }}" placeholder="@lang('admin/blog.labels.meta-title')">
+                                                  @if ($errors->has("meta-title-$locale"))
+                                                      <span class="help-block">
+                                                          <strong>{{ $errors->first("meta-title-$locale") }}</strong>
+                                                      </span>
+                                                  @endif
+                                              </div>
+
+                                              <div class="form-group {{ $errors->has('meta-description-'.$locale.'') ? 'has-error' : '' }}">
+                                                  <label for="meta-description-{{ $locale }}">@lang('admin/blog.labels.meta-description')</label>
+                                                  <input type="text" class="form-control" id="meta-description-{{ $locale }}" name="meta-description-{{ $locale }}" value="{{ old('meta-description-'.$locale.'') }}" placeholder="@lang('admin/blog.labels.meta-description')">
+                                                  @if ($errors->has("meta-description-$locale"))
+                                                      <span class="help-block">
+                                                          <strong>{{ $errors->first("meta-description-$locale") }}</strong>
+                                                      </span>
+                                                  @endif
+                                              </div>
+
+                                          </div>
+                                      @endforeach
                                   </div>
 
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-plus"></i> @lang('admin/common.buttons.create')</button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="{{ old('redirect_to', URL::previous()) }}" class="btn btn-default btn-block"><i class="fa fa-times"></i> @lang('admin/common.buttons.cancel')</a>
+                                    </div>
                                 </div>
 
                             </div>
@@ -124,9 +213,9 @@
 
 @section('bottom_scripts')
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ru.js"></script>
+<script type="text/javascript" src="{{ asset('js/moment-with-locales.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=prz9vfpgqdelq0k500a5dpabhcdzuvvw9yigzddpy1lj2nd9"></script>
 
 <script>
 
@@ -144,10 +233,9 @@ $('#created_at').datetimepicker({
 
 });
 
-$('#myTabs a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
+tinymce.init({ selector:'textarea' });
+
+
 
 </script>
 
