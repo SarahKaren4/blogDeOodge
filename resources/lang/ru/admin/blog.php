@@ -5,6 +5,7 @@ return [
         'categories' => 'Категории',
         'posts' => 'Посты',
         'posts_create' => 'Создать пост',
+        'posts_edit' => 'Редактировать пост',
     ],
     'tables' => [
         'id' => 'ID',
@@ -13,15 +14,21 @@ return [
         'categories' => 'Категории',
         'user' => 'Пользователь',
         'comments' => 'Комментарии',
+        'status' => 'Статус',
+        'timestamps' => 'Даты',
+        'image' => 'Изображение',
     ],
     'labels' => [
         'slug' => 'Алиас',
-        'created_at' => 'Дата создания',
+        'published_at' => 'Дата публикации',
         'status' => 'Статус',
         'title' => 'Заголовок',
         'description' => 'Статья',
         'meta-title' => 'Мета заголовок',
         'meta-description' => 'Мета описание',
+        'image' => 'Изображение',
+        'new_image' => 'Заменить изображение',
+        'attached_image' => 'Прикрепленное изображение',
     ],
     'texts' => [
 
@@ -31,5 +38,6 @@ return [
     ],
     'alerts' => [
         'post_store_success' => 'Отлично! Новый пост был успешно создан',
+        'post_update_success' => 'Отлично! Пост был успешно обновлен',
     ],
 ];

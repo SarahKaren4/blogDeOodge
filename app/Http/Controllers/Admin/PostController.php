@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
+use Illuminate\Validation\Rule;
 
 class PostController extends \App\Http\Controllers\Controller
 {
@@ -51,9 +52,13 @@ class PostController extends \App\Http\Controllers\Controller
     {
         $validateArray = [
             'slug' => 'required|unique:posts|alpha_dash|max:150|regex:/^[a-zA-z0-9\-\_]+$/',
-            'created_at' => 'required|date|date_format:j.m.Y g:i:s a',
+            'published_at' => [
+                'required',
+                'regex:/^[\d]{2},\s[\d]{2},\s[\d]{4}\s\|\s[\d]{2}:[\d]{2}:[\d]{2}\s[am|pm]{2}$/',
+            ],
             'status' => 'required|integer|max:1',
             'categories' => 'required|array',
+            'image' => 'image',
         ];
 
         foreach (config('translatable.locales') as $lang) {
@@ -89,9 +94,17 @@ class PostController extends \App\Http\Controllers\Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $postModel, Category $categoryModel, $id)
     {
-        //
+        $post = $postModel->getPostById($id);
+        $categories = $categoryModel->getCategories();
+        $checkedCategories = $post->categories->pluck('id')->toArray();
+
+        return view('admin.post.edit', [
+            'post' => $post,
+            'categories' => $categories,
+            'checkedCategories' => $checkedCategories,
+        ]);
     }
 
     /**
@@ -101,9 +114,39 @@ class PostController extends \App\Http\Controllers\Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $postModel, $id)
     {
-        //
+        $validateArray = [
+            'slug' => [
+                'required',
+                'alpha_dash',
+                'max:150',
+                'regex:/^[a-zA-z0-9\-\_]+$/',
+                Rule::unique('posts')->ignore($id),
+            ],
+            'published_at' => [
+                'required',
+                'regex:/^[\d]{2},\s[\d]{2},\s[\d]{4}\s\|\s[\d]{2}:[\d]{2}:[\d]{2}\s[am|pm]{2}$/',
+            ],
+            'status' => 'required|integer|max:1',
+            'categories' => 'required|array',
+            'image' => 'image',
+        ];
+
+        foreach (config('translatable.locales') as $lang) {
+            $validateArray['title-' . $lang] = 'required|max:150';
+            $validateArray['description-' . $lang] = 'required';
+            $validateArray['meta-title-' . $lang] = 'required|max:150';
+            $validateArray['meta-description-' . $lang] = 'required|max:200';
+        }
+
+        $request->validate($validateArray);
+
+        $postModel->updatePost($request, $id);
+
+        $request->session()->flash('success', __('admin/blog.alerts.post_update_success'));
+
+        return redirect()->to($request->redirect_to);
     }
 
     /**

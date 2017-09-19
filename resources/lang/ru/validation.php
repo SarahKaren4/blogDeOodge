@@ -42,7 +42,7 @@ return [
     'exists'               => 'Выбранный :attribute не верный.',
     'file'                 => ':attribute должен содержать файл.',
     'filled'               => ':attribute поле должно содержать значение.',
-    'image'                => ':attribute должен содержать изображение.',
+    'image'                => 'Поле :attribute должено содержать изображение.',
     'in'                   => 'Выбранные :attribute не верны.',
     'in_array'             => ':attribute не содержится в :other.',
     'integer'              => ':attribute должен быть цифрой.',

@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    @lang('admin/blog.titles.posts_create')
+    @lang('admin/blog.titles.posts_edit')
 @endsection
 
 @section('top_styles')
@@ -16,14 +16,15 @@
             <div class="panel panel-default">
                 <div class="panel-body">
 
-                    <h3 style="margin:0">@lang('admin/blog.titles.posts_create')</h3>
+                    <h3 style="margin:0">@lang('admin/blog.titles.posts_edit')</h3>
 
                 </div>
             </div>
 
-            <form action="{{ route('admin.post.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.post.update', ['id' => $post->id]) }}" method="POST" enctype="multipart/form-data">
 
                 {{ csrf_field() }}
+                {{ method_field('PUT') }}
                 <input type="text" name="redirect_to" value="{{ old('redirect_to', URL::previous()) }}" hidden>
 
                 <div class="row">
@@ -35,7 +36,7 @@
 
                                 <div class="form-group {{ $errors->has('slug') ? 'has-error' : '' }}">
                                     <label for="slug">@lang('admin/blog.labels.slug')</label>
-                                    <input type="text" class="form-control" id="slug" name="slug" value="{{ old('slug') }}" placeholder="@lang('admin/blog.labels.slug')" autofocus>
+                                    <input type="text" class="form-control" id="slug" name="slug" value="{{ old('slug', $post->slug) }}" placeholder="@lang('admin/blog.labels.slug')" autofocus>
                                     @if ($errors->has('slug'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('slug') }}</strong>
@@ -45,7 +46,7 @@
 
                                 <div class="form-group {{ $errors->has('published_at') ? 'has-error' : '' }}">
                                     <label for="published_at">@lang('admin/blog.labels.published_at')</label>
-                                    <input type="text" class="form-control" id="published_at" name="published_at" value="{{ old('published_at', date('j, m, Y | g:i:s a')) }}" placeholder="@lang('admin/blog.labels.published_at')" autofocus>
+                                    <input type="text" class="form-control" id="published_at" name="published_at" value="{{ old('published_at', $post->published_at) }}" placeholder="@lang('admin/blog.labels.published_at')" autofocus>
                                     @if ($errors->has('published_at'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('published_at') }}</strong>
@@ -55,15 +56,14 @@
 
                                 <div class="row">
                                     <div class="col-md-5">
-
                                         <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                                             <label for="status">@lang('admin/blog.labels.status')</label><br>
                                             <div class="btn-group" data-toggle="buttons">
-                                                <label class="btn btn-default {{ old('status') ? 'active' : '' }}">
-                                                    <input value="1" name="status" type="radio" autocomplete="off" {{ old('status') ? 'checked' : '' }}> <i class="fa fa-check-square-o"></i> Active
+                                                <label class="btn btn-default {{ old('status', $post->status) ? 'active' : '' }}">
+                                                    <input value="1" name="status" type="radio" autocomplete="off" {{ old('status', $post->status) ? 'checked' : '' }}> <i class="fa fa-check-square-o"></i> Active
                                                 </label>
-                                                <label class="btn btn-default {{ old('status') ? '' : 'active' }}">
-                                                    <input value="0" name="status" type="radio" autocomplete="off" {{ old('status') ? '' : 'checked' }}> <i class="fa fa-ban"></i> Disabled
+                                                <label class="btn btn-default {{ old('status', $post->status) ? '' : 'active' }}">
+                                                    <input value="0" name="status" type="radio" autocomplete="off" {{ old('status', $post->status) ? '' : 'checked' }}> <i class="fa fa-ban"></i> Disabled
                                                 </label>
                                             </div>
                                             @if ($errors->has('status'))
@@ -72,11 +72,16 @@
                                                 </span>
                                             @endif
                                         </div>
-
                                     </div>
                                     <div class="col-md-7">
                                         <div class="well {{ $errors->has('image') ? 'has-error' : '' }}">
-                                            <label for="image">@lang('admin/blog.labels.image')</label>
+                                            <div>
+                                                @if($post->image)
+                                                    <img src="{{ asset('images/posts/small/' . $post->image) }}" style="width:100%">
+                                                @endif
+                                            </div>
+                                            <br>
+                                            <label for="image">@lang('admin/blog.labels.new_image')</label>
                                             <input type="file" id="image" name="image">
                                             @if ($errors->has('image'))
                                                 <span class="help-block">
@@ -104,7 +109,8 @@
                                     <div class="checkbox">
                                         <label>
                                             <input type="checkbox" value="{{ $category->id }}" name="categories[]"
-                                            {{ is_array(old("categories")) && in_array($category->id, old("categories")) ? "checked" : "" }}>
+                                            {{ (is_array(old("categories")) && in_array($category->id, old("categories")))
+                                            || in_array($category->id, $checkedCategories) ? "checked" : "" }} >
                                             {{ $category->title }}
                                         </label>
                                     </div>
@@ -152,7 +158,7 @@
                                               <br>
                                               <div class="form-group {{ $errors->has('title-'.$locale.'') ? 'has-error' : '' }}">
                                                   <label for="title-{{ $locale }}">@lang('admin/blog.labels.title')</label>
-                                                  <input type="text" class="form-control" id="title-{{ $locale }}" name="title-{{ $locale }}" value="{{ old('title-'.$locale.'') }}" placeholder="@lang('admin/blog.labels.title')">
+                                                  <input type="text" class="form-control" id="title-{{ $locale }}" name="title-{{ $locale }}" value="{{ old('title-'.$locale.'', $post->getTranslation($locale)->title) }}" placeholder="@lang('admin/blog.labels.title')">
                                                   @if ($errors->has("title-$locale"))
                                                       <span class="help-block">
                                                           <strong>{{ $errors->first("title-$locale") }}</strong>
@@ -163,7 +169,7 @@
                                               <div class="form-group {{ $errors->has('description-'.$locale.'') ? 'has-error' : '' }}">
                                                   <label for="description-{{ $locale }}">@lang('admin/blog.labels.description')</label>
                                                   <textarea style="height:300px;" class="form-control" id="description-{{ $locale }}" name="description-{{ $locale }}" placeholder="@lang('admin/blog.labels.description')">
-                                                      {{ old('description-'.$locale.'') }}
+                                                      {{ old('description-'.$locale.'', $post->getTranslation($locale)->description) }}
                                                   </textarea>
                                                   @if ($errors->has("description-$locale"))
                                                       <span class="help-block">
@@ -174,7 +180,7 @@
 
                                               <div class="form-group {{ $errors->has('meta-title-'.$locale.'') ? 'has-error' : '' }}">
                                                   <label for="meta-title-{{ $locale }}">@lang('admin/blog.labels.meta-title')</label>
-                                                  <input type="text" class="form-control" id="meta-title-{{ $locale }}" name="meta-title-{{ $locale }}" value="{{ old('meta-title-'.$locale.'') }}" placeholder="@lang('admin/blog.labels.meta-title')">
+                                                  <input type="text" class="form-control" id="meta-title-{{ $locale }}" name="meta-title-{{ $locale }}" value="{{ old('meta-title-'.$locale.'', $post->getTranslation($locale)->meta_title) }}" placeholder="@lang('admin/blog.labels.meta-title')">
                                                   @if ($errors->has("meta-title-$locale"))
                                                       <span class="help-block">
                                                           <strong>{{ $errors->first("meta-title-$locale") }}</strong>
@@ -184,7 +190,7 @@
 
                                               <div class="form-group {{ $errors->has('meta-description-'.$locale.'') ? 'has-error' : '' }}">
                                                   <label for="meta-description-{{ $locale }}">@lang('admin/blog.labels.meta-description')</label>
-                                                  <input type="text" class="form-control" id="meta-description-{{ $locale }}" name="meta-description-{{ $locale }}" value="{{ old('meta-description-'.$locale.'') }}" placeholder="@lang('admin/blog.labels.meta-description')">
+                                                  <input type="text" class="form-control" id="meta-description-{{ $locale }}" name="meta-description-{{ $locale }}" value="{{ old('meta-description-'.$locale.'', $post->getTranslation($locale)->meta_description) }}" placeholder="@lang('admin/blog.labels.meta-description')">
                                                   @if ($errors->has("meta-description-$locale"))
                                                       <span class="help-block">
                                                           <strong>{{ $errors->first("meta-description-$locale") }}</strong>
@@ -206,7 +212,7 @@
 
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-plus"></i> @lang('admin/common.buttons.create')</button>
+                                        <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-save"></i> @lang('admin/common.buttons.save')</button>
                                     </div>
                                     <div class="col-md-6">
                                         <a href="{{ old('redirect_to', URL::previous()) }}" class="btn btn-default btn-block"><i class="fa fa-times"></i> @lang('admin/common.buttons.cancel')</a>

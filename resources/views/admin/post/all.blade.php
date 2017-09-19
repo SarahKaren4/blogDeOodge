@@ -30,10 +30,12 @@
                         <thead>
                             <tr>
                                 <th>@lang('admin/blog.tables.id')</th>
+                                <th>@lang('admin/blog.tables.image')</th>
                                 <th>@lang('admin/blog.tables.title')</th>
                                 <th>@lang('admin/blog.tables.categories')</th>
                                 <th>@lang('admin/blog.tables.user')</th>
-                                <th>@lang('admin/blog.tables.comments')</th>
+                                <th>@lang('admin/blog.tables.status')</th>
+                                <th>@lang('admin/blog.tables.timestamps')</th>
                                 <th>@lang('admin/blog.tables.actions')</th>
                             </tr>
                         </thead>
@@ -41,6 +43,9 @@
                             @foreach($posts as $post)
                                 <tr>
                                     <td>{{ $post->id }}</td>
+                                    <td>
+                                        <img src="{{ asset('images/posts/small/' . $post->image) }}" width="80">
+                                    </td>
                                     <td>{{ $post->title }}</td>
                                     <td>
                                         <ul>
@@ -50,11 +55,16 @@
                                         </ul>
                                     </td>
                                     <td>{{ $post->user->name }}</td>
-                                    <td>{{ $post->comments()->count() }}</td>
+                                    <td>{!! $post->status ? '<i class="fa fa-check text-success"></i>' : '<i class="fa fa-ban text-danger"></i>' !!}</td>
+                                    <td>
+                                        <i class="fa fa-plus"></i> {{ $post->created_at }}<br>
+                                        <i class="fa fa-refresh"></i> {{ $post->updated_at }}<br>
+                                        <i class="fa fa-calendar-check-o"></i> {{ $post->published_at }}
+                                    </td>
                                     <td class="text-right">
-                                        <a href="{{ route('admin.post.show', ['id' => $post->id]) }}" class="btn btn-default btn-sm"><i class="fa fa-eye"></i> @lang('admin/common.buttons.view')</a>
-                                        <a href="{{ route('admin.post.edit', ['id' => $post->id]) }}" class="btn btn-default btn-sm"><i class="fa fa-edit"></i> @lang('admin/common.buttons.edit')</a>
-                                        <a href="{{ route('admin.post.delete', ['id' => $post->id]) }}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> @lang('admin/common.buttons.delete')</a>
+                                        <a href="{{ route('admin.post.show', ['id' => $post->id]) }}" class="btn btn-default btn"><i class="fa fa-eye"></i></a>
+                                        <a href="{{ route('admin.post.edit', ['id' => $post->id]) }}" class="btn btn-default btn"><i class="fa fa-edit"></i></a>
+                                        <a href="{{ route('admin.post.delete', ['id' => $post->id]) }}" class="btn btn-danger btn"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
