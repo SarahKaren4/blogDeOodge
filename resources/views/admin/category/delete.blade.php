@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    @lang('admin/user.titles.role_delete') "{{ $role->name }}" ?
+    @lang('admin/admin.titles.category_delete') "{{ $category->name }}" ?
 @endsection
 
 
@@ -13,7 +13,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-body">
-                        <h3 style="margin:0">@lang('admin/user.titles.role_delete') "{{ $role->display_name }}" ?</h3>
+                        <h3 style="margin:0">@lang('admin/admin.titles.category_delete') "{{ $category->name }}" ?</h3>
                 </div>
             </div>
 
@@ -23,12 +23,8 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
 
-                            @if($role->permissions()->count() || $role->admins()->count() || $role->users()->count())
-                                @if($role->admins()->count() || $role->users()->count())
-                                    <div class="alert alert-danger" role="alert">@lang('admin/user.texts.warning_important_relations')</div>
-                                @else
-                                    <div class="alert alert-danger" role="alert">@lang('admin/user.texts.warning_relations')</div>
-                                @endif
+                            @if($category->posts()->count())
+                                <div class="alert alert-danger" role="alert">@lang('admin/user.texts.warning_important_relations')</div>
                             @endif
 
                             <table class="table">
@@ -38,22 +34,11 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>@lang('admin/user.tables.permissions')</td>
-                                        <td>{{ $role->permissions()->count() }}</td>
-                                    </tr>
-                                    <tr>
                                         <td>
-                                            @lang('admin/user.tables.admins')
+                                            @lang('admin/blog.tables.posts')
                                             <span class="label label-warning">@lang('admin/common.labels.important')</span>
                                         </td>
-                                        <td>{{ $role->admins()->count() }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            @lang('admin/user.tables.users')
-                                            <span class="label label-warning">@lang('admin/common.labels.important')</span>
-                                        </td>
-                                        <td>{{ $role->users()->count() }}</td>
+                                        <td>{{ $category->posts()->count() }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -61,12 +46,12 @@
                         </div>
                     </div>
 
-                    @if(!($role->admins()->count() || !$role->users()->count()))
+                    @if(!$category->posts()->count())
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <form action="{{ route('admin.role.destroy', ['id' => $role->id]) }}" method="POST">
+                                        <form action="{{ route('admin.category.destroy', ['id' => $category->id]) }}" method="POST">
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
                                             <input type="text" name="redirect_to" hidden value="{{ URL::previous() }}">

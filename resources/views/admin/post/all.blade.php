@@ -35,8 +35,8 @@
                                 <th>@lang('admin/blog.tables.categories')</th>
                                 <th>@lang('admin/blog.tables.user')</th>
                                 <th>@lang('admin/blog.tables.status')</th>
-                                <th>@lang('admin/blog.tables.timestamps')</th>
-                                <th>@lang('admin/blog.tables.actions')</th>
+                                <th style="min-width:220px">@lang('admin/blog.tables.timestamps')</th>
+                                <th style="min-width:150px">@lang('admin/blog.tables.actions')</th>
                             </tr>
                         </thead>
                         <tbody>

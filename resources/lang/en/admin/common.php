@@ -9,6 +9,7 @@ return [
         'create' => 'Create',
     ],
     'menu' => [
+        'main' => 'Main',
         'users' => 'Users',
         'permissions' => 'Permissions',
         'roles' => 'Roles',
@@ -16,6 +17,8 @@ return [
         'site_users' => 'Site users',
         'blog' => 'Blog',
         'posts' => 'Posts',
+        'categories' => 'Categories',
+        'comments' => 'Comments',
     ],
     'labels' => [
         'created_at' => 'Created at',

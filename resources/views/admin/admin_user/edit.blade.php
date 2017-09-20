@@ -29,10 +29,10 @@
 
                                 {{ csrf_field() }}
                                 {{ method_field('PUT') }}
-                                <input type="text" name="redirect_to" value="{{ old('redirect_to') ? old('redirect_to') : URL::previous() }}" hidden>
+                                <input type="text" name="redirect_to" value="{{ old('redirect_to', URL::previous()) }}" hidden>
                                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                                     <label for="name">@lang('admin/user.labels.first_name')</label>
-                                    <input type="text" class="form-control" id="name" name="name" value="{{ $admin->name }}" placeholder="@lang('admin/user.labels.first_name')" >
+                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $admin->name) }}" placeholder="@lang('admin/user.labels.first_name')" >
                                     @if ($errors->has('name'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('name') }}</strong>
@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                                     <label for="email">@lang('admin/user.labels.email')</label>
-                                    <input type="text" class="form-control" id="email" name="email" value="{{ $admin->email }}" placeholder="@lang('admin/user.labels.email')">
+                                    <input type="text" class="form-control" id="email" name="email" value="{{ old('email', $admin->email) }}" placeholder="@lang('admin/user.labels.email')">
                                     @if ($errors->has('email'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('email') }}</strong>
@@ -127,7 +127,7 @@
                                 <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-save"></i> @lang('admin/common.buttons.save')</button>
                             </div>
                             <div class="col-md-6">
-                                <a href="{{ old('redirect_to') ? old('redirect_to') : URL::previous() }}" class="btn btn-default btn-block"><i class="fa fa-times"></i> @lang('admin/common.buttons.cancel')</a>
+                                <a href="{{ old('redirect_to', URL::previous()) }}" class="btn btn-default btn-block"><i class="fa fa-times"></i> @lang('admin/common.buttons.cancel')</a>
                             </div>
                         </div>
 

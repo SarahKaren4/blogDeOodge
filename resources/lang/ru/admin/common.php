@@ -9,6 +9,7 @@ return [
         'create' => 'Создать',
     ],
     'menu' => [
+        'main' => 'Главная',
         'users' => 'Пользователи',
         'permissions' => 'Права доступа',
         'roles' => 'Роли',
@@ -16,6 +17,8 @@ return [
         'site_users' => 'Пользователи сайта',
         'blog' => 'Блог',
         'posts' => 'Посты',
+        'categories' => 'Категории',
+        'comments' => 'Комментарии',
     ],
     'labels' => [
         'created_at' => 'Дата создания',

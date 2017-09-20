@@ -182,6 +182,7 @@ return [
         Dimsav\Translatable\TranslatableServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Mews\Purifier\PurifierServiceProvider::class,
+        Kaishiyoku\Menu\MenuServiceProvider::class,
     ],
 
     /*
@@ -234,6 +235,7 @@ return [
         'Laratrust'   => Laratrust\LaratrustFacade::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Purifier' => Mews\Purifier\Facades\Purifier::class,
+        'Menu' => Kaishiyoku\Menu\Facades\Menu::class,
     ],
 
 ];

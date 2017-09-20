@@ -1,12 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    @lang('admin/blog.titles.posts_create')
-@endsection
-
-@section('top_styles')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
-    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
+    @lang('admin/blog.titles.category_create')
 @endsection
 
 @section('content')
@@ -17,12 +12,12 @@
             <div class="panel panel-default">
                 <div class="panel-body">
 
-                    <h3 style="margin:0">@lang('admin/blog.titles.posts_create')</h3>
+                    <h3 style="margin:0">@lang('admin/blog.titles.category_create')</h3>
 
                 </div>
             </div>
 
-            <form action="{{ route('admin.post.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.category.store') }}" method="POST">
 
                 {{ csrf_field() }}
                 <input type="text" name="redirect_to" value="{{ old('redirect_to', URL::previous()) }}" hidden>
@@ -44,31 +39,6 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group {{ $errors->has('categories') ? 'has-error' : '' }}">
-                                    <label for="slug">@lang('admin/blog.labels.choose_categories')</label>
-                                    <select class="js-multiple-select" name="categories[]" multiple="multiple">
-                                        @foreach($categories as $category)
-                                            <option value="{{ $category->id }}" {{ is_array(old("categories")) && in_array($category->id, old("categories")) ? "selected" : "" }}>{{ $category->title }}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('categories'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('categories') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-
-                                <div class="form-group {{ $errors->has('published_at') ? 'has-error' : '' }}">
-                                    <label for="published_at">@lang('admin/blog.labels.published_at')</label>
-                                    <input type="text" class="form-control" id="published_at" name="published_at" value="{{ old('published_at', date('j, m, Y | g:i:s a')) }}" placeholder="@lang('admin/blog.labels.published_at')" autofocus>
-                                    @if ($errors->has('published_at'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('published_at') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-
-
                                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                                     <label for="status">@lang('admin/blog.labels.status')</label><br>
                                     <div class="btn-group" data-toggle="buttons">
@@ -82,16 +52,6 @@
                                     @if ($errors->has('status'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('status') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-
-                                <div class="well {{ $errors->has('image') ? 'has-error' : '' }}">
-                                    <label for="image">@lang('admin/blog.labels.image')</label>
-                                    <input type="file" id="image" name="image">
-                                    @if ($errors->has('image'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('image') }}</strong>
                                         </span>
                                     @endif
                                 </div>
@@ -132,18 +92,6 @@
                                                   @if ($errors->has("title-$locale"))
                                                       <span class="help-block">
                                                           <strong>{{ $errors->first("title-$locale") }}</strong>
-                                                      </span>
-                                                  @endif
-                                              </div>
-
-                                              <div class="form-group {{ $errors->has('description-'.$locale.'') ? 'has-error' : '' }}">
-                                                  <label for="description-{{ $locale }}">@lang('admin/blog.labels.description')</label>
-                                                  <textarea style="height:250px;" class="form-control" id="description-{{ $locale }}" name="description-{{ $locale }}" placeholder="@lang('admin/blog.labels.description')">
-                                                      {{ old('description-'.$locale.'') }}
-                                                  </textarea>
-                                                  @if ($errors->has("description-$locale"))
-                                                      <span class="help-block">
-                                                          <strong>{{ $errors->first("description-$locale") }}</strong>
                                                       </span>
                                                   @endif
                                               </div>
@@ -207,41 +155,5 @@
         </div>
     </div>
 </div>
-
-@endsection
-
-@section('bottom_scripts')
-
-<script type="text/javascript" src="{{ asset('js/moment-with-locales.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/select2.min.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
-<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=prz9vfpgqdelq0k500a5dpabhcdzuvvw9yigzddpy1lj2nd9"></script>
-<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=prz9vfpgqdelq0k500a5dpabhcdzuvvw9yigzddpy1lj2nd9"></script>
-
-<script>
-
-$('#published_at').datetimepicker({
-
-    format: 'D, MM, YYYY | hh:mm:SS a',
-    dayViewHeaderFormat: 'MMMM YYYY',
-    sideBySide: true,
-    showClose: true,
-    widgetPositioning: {
-        horizontal: 'auto',
-        vertical: 'bottom',
-    },
-    locale: '{{ Config::get("app.locale") }}',
-
-});
-
-tinymce.init({ selector:'textarea' });
-
-$('.js-multiple-select').select2({
-    placeholder: "@lang('admin/blog.labels.choose_categories')",
-    allowClear: true,
-    width: '100%',
-});
-
-</script>
 
 @endsection

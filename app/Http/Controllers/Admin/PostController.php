@@ -14,11 +14,6 @@ class PostController extends \App\Http\Controllers\Controller
         $this->middleware('admin');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Post $postModel)
     {
         $posts = $postModel->getPostsList();
@@ -28,11 +23,6 @@ class PostController extends \App\Http\Controllers\Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Category $categoryModel)
     {
         $categories = $categoryModel->getCategories();
@@ -42,16 +32,10 @@ class PostController extends \App\Http\Controllers\Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request, Post $postModel)
     {
         $validateArray = [
-            'slug' => 'required|unique:posts|alpha_dash|max:150|regex:/^[a-zA-z0-9\-\_]+$/',
+            'slug' => 'required|unique:posts|max:150|regex:/^[a-zA-z0-9\-\_]+$/',
             'published_at' => [
                 'required',
                 'regex:/^[\d]{2},\s[\d]{2},\s[\d]{4}\s\|\s[\d]{2}:[\d]{2}:[\d]{2}\s[am|pm]{2}$/',
@@ -77,23 +61,15 @@ class PostController extends \App\Http\Controllers\Controller
         return redirect()->route('admin.posts');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show(Post $postModel, $id)
     {
-        //
+        $post = $postModel->getPostById($id);
+
+        return view('admin.post.show', [
+            'post' => $post,
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Post $postModel, Category $categoryModel, $id)
     {
         $post = $postModel->getPostById($id);
@@ -107,19 +83,11 @@ class PostController extends \App\Http\Controllers\Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Post $postModel, $id)
     {
         $validateArray = [
             'slug' => [
                 'required',
-                'alpha_dash',
                 'max:150',
                 'regex:/^[a-zA-z0-9\-\_]+$/',
                 Rule::unique('posts')->ignore($id),
@@ -149,14 +117,21 @@ class PostController extends \App\Http\Controllers\Controller
         return redirect()->to($request->redirect_to);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function delete(Post $postModel, $id)
     {
-        //
+        $post = $postModel->getPostById($id);
+
+        return view('admin.post.delete', [
+            'post' => $post,
+        ]);
+    }
+
+    public function destroy(Request $request, Post $postModel, $id)
+    {
+        $postModel->destroyPost($id);
+
+        $request->session()->flash('success', __('admin/blog.alerts.post_delete_success'));
+
+        return redirect()->to($request->redirect_to);
     }
 }

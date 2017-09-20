@@ -2,10 +2,19 @@
 return [
     'titles' => [
         'info' => 'Information',
+        'content' => 'Content',
+        'meta_data' => 'Meta data',
         'categories' => 'Categories',
         'posts' => 'Posts',
         'posts_create' => 'Create post',
         'posts_edit' => 'Edit post',
+        'posts_show' => 'Post view',
+        'post_delete' => 'Delete post',
+        'categories' => 'Categories',
+        'category_create' => 'Create category',
+        'category_edit' => 'Edit Category',
+        'category_show' => 'Сategory view',
+        'category_delete' => 'Delete category'
     ],
     'tables' => [
         'id' => 'ID',
@@ -17,6 +26,7 @@ return [
         'status' => 'Status',
         'timestamps' => 'Timestamps',
         'image' => 'Image',
+        'posts' => 'Posts',
     ],
     'labels' => [
         'slug' => 'Slug',
@@ -29,15 +39,23 @@ return [
         'image' => 'Image',
         'new_image' => 'New image',
         'attached_image' => 'Attached image',
+        'choose_categories' => 'Choose categories',
     ],
     'texts' => [
-
+        'active' => 'Active',
+        'disabled' => 'Disabled',
+        'warning_relations' => 'Current item has relations. In case deleting you\'ll lose all those relations.',
     ],
     'buttons' => [
-
+        'back_posts' => 'Back to the list of posts',
+        'back_categories' => 'Back to the list of categories',
     ],
     'alerts' => [
         'post_store_success' => 'Great! New post has been created successfully',
         'post_update_success' => 'Great! The post has been updated successfully',
+        'post_delete_success' => 'Great! The post has been deleted successfully',
+        'category_store_success' => 'Great! New category has been created successfully',
+        'category_update_success' => 'Great! The category has been updated successfully',
+        'category_delete_success' => 'Great! The category has been deleted successfully',
     ],
 ];

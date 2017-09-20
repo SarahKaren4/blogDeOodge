@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App;
 use Purifier;
 use Image;
+use Storage;
 
 class Post extends Model
 {
@@ -87,6 +88,19 @@ class Post extends Model
         $post->categories()->sync($request->categories);
     }
 
+    public function destroyPost($id)
+    {
+        $post = $this->findOrFail($id);
+
+        $post->comments()->delete();
+        $post->categories()->detach();
+        $post->delete();
+
+        if (isset($post->image)) {
+            $this->deleteFile($post->image);
+        }
+    }
+
     public function scopeSort($query)
     {
         $query->latest('id');
@@ -143,8 +157,8 @@ class Post extends Model
 
     private function deleteFile($file)
     {
-        unlink(public_path('images/posts/' . $file));
-        unlink(public_path('images/posts/small/' . $file));
+        Storage::delete('images/posts/' . $file);
+        Storage::delete('images/posts/small/' . $file);
     }
 
     public function user()

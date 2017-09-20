@@ -27,7 +27,7 @@
                                 {{ csrf_field() }}
                                 {{ method_field('PUT') }}
 
-                                <input type="text" hidden name="redirect_to" value="{{ old('redirect_to') ? old('redirect_to') : URL::previous() }}">
+                                <input type="text" hidden name="redirect_to" value="{{ old('redirect_to', URL::previous()) }}">
 
                                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                                     <label for="name">@lang('admin/user.labels.name')</label>
@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="form-group {{ $errors->has('display_name') ? 'has-error' : '' }}">
                                     <label for="display_name">@lang('admin/user.labels.display_name')</label>
-                                    <input type="text" class="form-control" id="display_name" name="display_name" value="{{ $permission->display_name }}" placeholder="@lang('admin/user.labels.display_name')">
+                                    <input type="text" class="form-control" id="display_name" name="display_name" value="{{ old('display_name', $permission->display_name) }}" placeholder="@lang('admin/user.labels.display_name')">
                                     @if ($errors->has('display_name'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('display_name') }}</strong>
@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
                                     <label for="description">@lang('admin/user.labels.description')</label>
-                                    <input type="text" class="form-control" id="description" name="description" value="{{ $permission->description }}" placeholder="@lang('admin/user.labels.description')">
+                                    <input type="text" class="form-control" id="description" name="description" value="{{ old('description', $permission->description) }}" placeholder="@lang('admin/user.labels.description')">
                                     @if ($errors->has('description'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('description') }}</strong>
@@ -68,7 +68,7 @@
                                         <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-save"></i> @lang('admin/common.buttons.save')</button>
                                     </div>
                                     <div class="col-md-6">
-                                        <a href="{{ old('redirect_to') ? old('redirect_to') : URL::previous() }}" class="btn btn-default btn-block"><i class="fa fa-times"></i> @lang('admin/common.buttons.cancel')</a>
+                                        <a href="{{ old('redirect_to', URL::previous()) }}" class="btn btn-default btn-block"><i class="fa fa-times"></i> @lang('admin/common.buttons.cancel')</a>
                                     </div>
                                 </div>
 

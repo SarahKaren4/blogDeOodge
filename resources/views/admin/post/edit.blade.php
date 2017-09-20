@@ -6,6 +6,7 @@
 
 @section('top_styles')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -28,7 +29,7 @@
                 <input type="text" name="redirect_to" value="{{ old('redirect_to', URL::previous()) }}" hidden>
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
 
                         <div class="panel panel-default">
                             <div class="panel-heading"><b>@lang('admin/blog.titles.info'):</b></div>
@@ -54,87 +55,72 @@
                                     @endif
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
-                                            <label for="status">@lang('admin/blog.labels.status')</label><br>
-                                            <div class="btn-group" data-toggle="buttons">
-                                                <label class="btn btn-default {{ old('status', $post->status) ? 'active' : '' }}">
-                                                    <input value="1" name="status" type="radio" autocomplete="off" {{ old('status', $post->status) ? 'checked' : '' }}> <i class="fa fa-check-square-o"></i> Active
-                                                </label>
-                                                <label class="btn btn-default {{ old('status', $post->status) ? '' : 'active' }}">
-                                                    <input value="0" name="status" type="radio" autocomplete="off" {{ old('status', $post->status) ? '' : 'checked' }}> <i class="fa fa-ban"></i> Disabled
-                                                </label>
-                                            </div>
-                                            @if ($errors->has('status'))
-                                                <span class="help-block">
-                                                    <strong>{{ $errors->first('status') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <div class="well {{ $errors->has('image') ? 'has-error' : '' }}">
-                                            <div>
-                                                @if($post->image)
-                                                    <img src="{{ asset('images/posts/small/' . $post->image) }}" style="width:100%">
-                                                @endif
-                                            </div>
-                                            <br>
-                                            <label for="image">@lang('admin/blog.labels.new_image')</label>
-                                            <input type="file" id="image" name="image">
-                                            @if ($errors->has('image'))
-                                                <span class="help-block">
-                                                    <strong>{{ $errors->first('image') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-6">
-
-                        <div class="panel panel-default">
-                            <div class="panel-heading"><b>@lang('admin/blog.titles.categories'):</b></div>
-                            <div class="panel-body">
-
-                                <div style="overflow-y:scroll;height:200px;" class="{{ $errors->has('categories') ? 'has-error' : '' }}">
-
-                                    @foreach($categories as $category)
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" value="{{ $category->id }}" name="categories[]"
-                                            {{ (is_array(old("categories")) && in_array($category->id, old("categories")))
-                                            || in_array($category->id, $checkedCategories) ? "checked" : "" }} >
-                                            {{ $category->title }}
-                                        </label>
-                                    </div>
-                                    @endforeach
-
+                                <div class="form-group {{ $errors->has('categories') ? 'has-error' : '' }}">
+                                    <label for="slug">@lang('admin/blog.labels.choose_categories')</label>
+                                    <select class="js-multiple-select" name="categories[]" multiple="multiple">
+                                        @foreach($categories as $category)
+                                            <option value="{{ $category->id }}"
+                                                {{ (is_array(old("categories")) && in_array($category->id, old("categories")))
+                                                || (in_array($category->id, $checkedCategories) && !is_array(old("categories"))) ? "selected" : "" }}
+                                            >
+                                                {{ $category->title }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                     @if ($errors->has('categories'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('categories') }}</strong>
                                         </span>
                                     @endif
+                                </div>
 
+                                <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
+                                    <label for="status">@lang('admin/blog.labels.status')</label><br>
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-default {{ old('status', $post->status) ? 'active' : '' }}">
+                                            <input value="1" name="status" type="radio" autocomplete="off" {{ old('status', $post->status) ? 'checked' : '' }}> <i class="fa fa-check-square-o"></i> Active
+                                        </label>
+                                        <label class="btn btn-default {{ old('status', $post->status) ? '' : 'active' }}">
+                                            <input value="0" name="status" type="radio" autocomplete="off" {{ old('status', $post->status) ? '' : 'checked' }}> <i class="fa fa-ban"></i> Disabled
+                                        </label>
+                                    </div>
+                                    @if ($errors->has('status'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('status') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><b>@lang('admin/blog.labels.image'):</b></div>
+                            <div class="panel-body">
+
+                                @if($post->image)
+                                    <img src="{{ asset('images/posts/small/' . $post->image) }}" style="width:100%">
+                                @endif
+                                <br>
+                                <div class="well {{ $errors->has('image') ? 'has-error' : '' }}">
+                                    <label for="image">@lang('admin/blog.labels.new_image')</label>
+                                    <input type="file" id="image" name="image">
+                                    @if ($errors->has('image'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('image') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
 
                             </div>
                         </div>
 
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-8">
 
                         <div class="panel panel-default">
-                            <div class="panel-heading"><b>@lang('admin/blog.titles.info'):</b></div>
+                            <div class="panel-heading"><b>@lang('admin/blog.titles.content'):</b></div>
                             <div class="panel-body">
 
                                 <div>
@@ -207,6 +193,12 @@
                             </div>
                         </div>
 
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+
                         <div class="panel panel-default">
                             <div class="panel-body">
 
@@ -237,6 +229,7 @@
 @section('bottom_scripts')
 
 <script type="text/javascript" src="{{ asset('js/moment-with-locales.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/select2.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=prz9vfpgqdelq0k500a5dpabhcdzuvvw9yigzddpy1lj2nd9"></script>
 
@@ -258,7 +251,11 @@ $('#published_at').datetimepicker({
 
 tinymce.init({ selector:'textarea' });
 
-
+$('.js-multiple-select').select2({
+    placeholder: "@lang('admin/blog.labels.choose_categories')",
+    allowClear: true,
+    width: '100%',
+});
 
 </script>
 

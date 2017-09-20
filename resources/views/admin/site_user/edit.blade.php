@@ -32,7 +32,7 @@
                                 <input type="text" name="redirect_to" value="{{ old('redirect_to') ? old('redirect_to') : URL::previous() }}" hidden>
                                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                                     <label for="name">@lang('admin/user.labels.first_name')</label>
-                                    <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}" placeholder="@lang('admin/user.labels.first_name')" >
+                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $user->name) }}" placeholder="@lang('admin/user.labels.first_name')" >
                                     @if ($errors->has('name'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('name') }}</strong>
@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                                     <label for="email">@lang('admin/user.labels.email')</label>
-                                    <input type="text" class="form-control" id="email" name="email" value="{{ $user->email }}" placeholder="@lang('admin/user.labels.email')">
+                                    <input type="text" class="form-control" id="email" name="email" value="{{ old('email', $user->email) }}" placeholder="@lang('admin/user.labels.email')">
                                     @if ($errors->has('email'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('email') }}</strong>

@@ -30,7 +30,7 @@ Route::namespace('Admin')->group(function () {
                 'update' => 'admin.permission.update',
                 'destroy' => 'admin.permission.destroy',
             ],
-            'except' => ['view'],
+            'except' => ['show'],
         ]);
         Route::get('/permissions/delete/{id}', ['as' => 'admin.permission.delete', 'uses' => 'PermissionController@delete']);
 
@@ -89,5 +89,19 @@ Route::namespace('Admin')->group(function () {
             ],
         ]);
         Route::get('/posts/delete/{id}', ['as' => 'admin.post.delete', 'uses' => 'PostController@delete']);
+
+        // Categories CRUD
+        Route::resource('categories', 'CategoryController', [
+            'names' => [
+                'index' => 'admin.categories',
+                'show' => 'admin.category.show',
+                'create' => 'admin.category.create',
+                'store' => 'admin.category.store',
+                'edit' => 'admin.category.edit',
+                'update' => 'admin.category.update',
+                'destroy' => 'admin.category.destroy',
+            ],
+        ]);
+        Route::get('/categories/delete/{id}', ['as' => 'admin.category.delete', 'uses' => 'CategoryController@delete']);
     });
 });

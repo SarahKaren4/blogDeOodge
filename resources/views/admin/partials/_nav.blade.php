@@ -1,3 +1,5 @@
+
+
 <nav class="navbar navbar-default navbar-static-top">
     <div class="container">
         <div class="navbar-header">
@@ -17,32 +19,9 @@
         </div>
 
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
-            <!-- Left Side Of Navbar -->
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        <i class="fa fa-users"></i> @lang('admin/common.menu.users')<span class="caret"></span>
-                    </a>
 
-                    <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ route('admin.admins') }}"><i class="fa fa-circle-o"></i>&nbsp;&nbsp;@lang('admin/common.menu.admin_users')</a></li>
-                            <li><a href="{{ route('admin.users') }}"><i class="fa fa-circle-o"></i>&nbsp;&nbsp;@lang('admin/common.menu.site_users')</a></li>
-                            <li><a href="{{ route('admin.roles') }}"><i class="fa fa-circle-o"></i>&nbsp;&nbsp;@lang('admin/common.menu.roles')</a></li>
-                            <li><a href="{{ route('admin.permissions') }}"><i class="fa fa-circle-o"></i>&nbsp;&nbsp;@lang('admin/common.menu.permissions')</a></li>
-                    </ul>
-
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        <i class="fa fa-th-list"></i> @lang('admin/common.menu.blog')<span class="caret"></span>
-                    </a>
-
-                    <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ route('admin.posts') }}"><i class="fa fa-circle-o"></i>&nbsp;&nbsp;@lang('admin/common.menu.posts')</a></li>
-                    </ul>
-
-                </li>
-            </ul>
+            <!-- Left Side Of Navbar. You can find it in App\Http\Middleware\MakeMenu -->
+            {!! Menu::render('admin_nav') !!}
 
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">

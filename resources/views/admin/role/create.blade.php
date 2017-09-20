@@ -28,7 +28,7 @@
                                     <div class="panel-body">
 
                                         {{ csrf_field() }}
-                                        <input type="text" name="redirect_to" value="{{ old('redirect_to') ? old('redirect_to') : URL::previous() }}" hidden>
+                                        <input type="text" name="redirect_to" value="{{ old('redirect_to', URL::previous()) }}" hidden>
                                         <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                                             <label for="name">@lang('admin/user.labels.name')</label>
                                             <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" placeholder="@lang('admin/user.labels.name')" autofocus>
@@ -101,7 +101,7 @@
                                         <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-plus"></i> @lang('admin/common.buttons.create')</button>
                                     </div>
                                     <div class="col-md-6">
-                                        <a href="{{ old('redirect_to') ? old('redirect_to') : URL::previous() }}" class="btn btn-default btn-block"><i class="fa fa-times"></i> @lang('admin/common.buttons.cancel')</a>
+                                        <a href="{{ old('redirect_to', URL::previous()) }}" class="btn btn-default btn-block"><i class="fa fa-times"></i> @lang('admin/common.buttons.cancel')</a>
                                     </div>
                                 </div>
                             </div>
