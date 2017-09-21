@@ -29,6 +29,7 @@ class MakeMenu
             Menu::dropdown([
                 Menu::link('admin.posts', '<i class="fa fa-circle-o"></i>&nbsp;&nbsp;' . __('admin/common.menu.posts')),
                 Menu::link('admin.categories', '<i class="fa fa-circle-o"></i>&nbsp;&nbsp;' . __('admin/common.menu.categories')),
+                Menu::link('admin.comments', '<i class="fa fa-circle-o"></i>&nbsp;&nbsp;' . __('admin/common.menu.comments')),
             ], '<i class="fa fa-th-list"></i> ' . __('admin/common.menu.blog')),
         ], ['class' => 'nav navbar-nav']);
 

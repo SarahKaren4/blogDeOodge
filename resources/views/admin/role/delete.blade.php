@@ -61,7 +61,7 @@
                         </div>
                     </div>
 
-                    @if(!($role->admins()->count() || !$role->users()->count()))
+                    @if(!($role->admins()->count() || $role->users()->count()))
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div class="row">

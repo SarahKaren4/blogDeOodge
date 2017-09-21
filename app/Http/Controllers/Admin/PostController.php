@@ -9,9 +9,19 @@ use Illuminate\Validation\Rule;
 
 class PostController extends \App\Http\Controllers\Controller
 {
-    public function __construct()
+    private $postModel;
+    private $categoryModel;
+
+    public function __construct(Post $postModel, Category $categoryModel)
     {
         $this->middleware('admin');
+        $this->middleware('permission:read-posts')->only(['index', 'show']);
+        $this->middleware('permission:create-posts')->only(['create', 'store']);
+        $this->middleware('permission:update-posts')->only(['edit', 'update']);
+        $this->middleware('permission:delete-posts')->only(['delete', 'destroy']);
+
+        $this->postModel = $postModel;
+        $this->categoryModel = $categoryModel;
     }
 
     public function index(Post $postModel)
@@ -23,16 +33,16 @@ class PostController extends \App\Http\Controllers\Controller
         ]);
     }
 
-    public function create(Category $categoryModel)
+    public function create()
     {
-        $categories = $categoryModel->getCategories();
+        $categories = $this->categoryModel->getCategories();
 
         return view('admin.post.create', [
             'categories' => $categories,
         ]);
     }
 
-    public function store(Request $request, Post $postModel)
+    public function store(Request $request)
     {
         $validateArray = [
             'slug' => 'required|unique:posts|max:150|regex:/^[a-zA-z0-9\-\_]+$/',
@@ -54,26 +64,26 @@ class PostController extends \App\Http\Controllers\Controller
 
         $request->validate($validateArray);
 
-        $postModel->storePost($request);
+        $this->postModel->storePost($request);
 
         $request->session()->flash('success', __('admin/blog.alerts.post_store_success'));
 
         return redirect()->route('admin.posts');
     }
 
-    public function show(Post $postModel, $id)
+    public function show($id)
     {
-        $post = $postModel->getPostById($id);
+        $post = $this->postModel->getPostById($id);
 
         return view('admin.post.show', [
             'post' => $post,
         ]);
     }
 
-    public function edit(Post $postModel, Category $categoryModel, $id)
+    public function edit($id)
     {
-        $post = $postModel->getPostById($id);
-        $categories = $categoryModel->getCategories();
+        $post = $this->postModel->getPostById($id);
+        $categories = $this->categoryModel->getCategories();
         $checkedCategories = $post->categories->pluck('id')->toArray();
 
         return view('admin.post.edit', [
@@ -83,7 +93,7 @@ class PostController extends \App\Http\Controllers\Controller
         ]);
     }
 
-    public function update(Request $request, Post $postModel, $id)
+    public function update(Request $request, $id)
     {
         $validateArray = [
             'slug' => [
@@ -110,25 +120,25 @@ class PostController extends \App\Http\Controllers\Controller
 
         $request->validate($validateArray);
 
-        $postModel->updatePost($request, $id);
+        $this->postModel->updatePost($request, $id);
 
         $request->session()->flash('success', __('admin/blog.alerts.post_update_success'));
 
         return redirect()->to($request->redirect_to);
     }
 
-    public function delete(Post $postModel, $id)
+    public function delete($id)
     {
-        $post = $postModel->getPostById($id);
+        $post = $this->postModel->getPostById($id);
 
         return view('admin.post.delete', [
             'post' => $post,
         ]);
     }
 
-    public function destroy(Request $request, Post $postModel, $id)
+    public function destroy(Request $request, $id)
     {
-        $postModel->destroyPost($id);
+        $this->postModel->destroyPost($id);
 
         $request->session()->flash('success', __('admin/blog.alerts.post_delete_success'));
 

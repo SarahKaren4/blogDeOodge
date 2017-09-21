@@ -77,10 +77,15 @@ class Admin extends Authenticatable
     {
         $admin = $this->getAdminById($id);
 
-        $admin->detachPermissions();
-        $admin->detachRoles();
+        $importantRelations = $admin->posts()->count() || $admin->comments()->count();
 
-        $admin->delete();
+        if (!$importantRelations) {
+            $admin->detachPermissions();
+            $admin->detachRoles();
+            $admin->comments()->delete();
+            $admin->posts()->delete();
+            $admin->delete();
+        }
     }
 
     public function scopeSort($query)
@@ -110,11 +115,11 @@ class Admin extends Authenticatable
 
     public function comments()
     {
-        return $this->morphMany('App\Model\Comment', 'user');
+        return $this->morphMany('App\Models\Comment', 'user');
     }
 
     public function posts()
     {
-        return $this->hasMany('App\Models\Post');
+        return $this->hasMany('App\Models\Post', 'user_id');
     }
 }

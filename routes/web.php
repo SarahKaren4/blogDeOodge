@@ -103,5 +103,19 @@ Route::namespace('Admin')->group(function () {
             ],
         ]);
         Route::get('/categories/delete/{id}', ['as' => 'admin.category.delete', 'uses' => 'CategoryController@delete']);
+
+        // Comments CRUD
+        Route::resource('comments', 'CommentController', [
+            'names' => [
+                'index' => 'admin.comments',
+                'create' => 'admin.comment.create',
+                'store' => 'admin.comment.store',
+                'edit' => 'admin.comment.edit',
+                'update' => 'admin.comment.update',
+                'destroy' => 'admin.comment.destroy',
+            ],
+            'except' => ['show', 'create', 'store'],
+        ]);
+        Route::get('/comments/delete/{id}', ['as' => 'admin.comment.delete', 'uses' => 'CommentController@delete']);
     });
 });

@@ -8,15 +8,22 @@ use Illuminate\Validation\Rule;
 
 class SiteUserController extends \App\Http\Controllers\Controller
 {
+    private $userModel;
 
-    public function __construct()
+    public function __construct(User $userModel)
     {
         $this->middleware('admin');
+        $this->middleware('permission:read-users')->only(['index', 'show']);
+        $this->middleware('permission:create-users')->only(['create', 'store']);
+        $this->middleware('permission:update-users')->only(['edit', 'update']);
+        $this->middleware('permission:delete-users')->only(['delete', 'destroy']);
+
+        $this->userModel = $userModel;
     }
 
-    public function index(User $userModel)
+    public function index()
     {
-        $users = $userModel->getUsersList();
+        $users = $this->userModel->getUsersList();
 
         return view('admin.site_user.all', [
             'users' => $users,
@@ -28,7 +35,7 @@ class SiteUserController extends \App\Http\Controllers\Controller
         return view('admin.site_user.create');
     }
 
-    public function store(Request $request, User $userModel)
+    public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|min:3|max:100|unique:users',
@@ -36,32 +43,32 @@ class SiteUserController extends \App\Http\Controllers\Controller
             'password' => 'required|min:6|max:60|confirmed',
         ]);
 
-        $userModel->storeUser($request);
+        $this->userModel->storeUser($request);
 
         $request->session()->flash('success', __('admin/user.alerts.site_user_store_success'));
 
         return redirect()->route('admin.users');
     }
 
-    public function show(User $userModel, $id)
+    public function show($id)
     {
-        $user = $userModel->getUserById($id);
+        $user = $this->userModel->getUserById($id);
 
         return view('admin.site_user.show', [
             'user' => $user,
         ]);
     }
 
-    public function edit(User $userModel, $id)
+    public function edit($id)
     {
-        $user = $userModel->getUserById($id);
+        $user = $this->userModel->getUserById($id);
 
         return view('admin.site_user.edit', [
             'user' => $user,
         ]);
     }
 
-    public function update(Request $request, User $userModel, $id)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'name' => [
@@ -78,25 +85,25 @@ class SiteUserController extends \App\Http\Controllers\Controller
             'password' => 'sometimes|required|min:6|max:60|confirmed',
         ]);
 
-        $userModel->updateUser($request, $id);
+        $this->userModel->updateUser($request, $id);
 
         $request->session()->flash('success', __('admin/user.alerts.site_user_update_success'));
 
         return redirect()->to($request->redirect_to);
     }
 
-    public function delete(User $userModel, $id)
+    public function delete($id)
     {
-        $user = $userModel->getUserById($id);
+        $user = $this->userModel->getUserById($id);
 
         return view('admin.site_user.delete', [
             'user' => $user,
         ]);
     }
 
-    public function destroy(Request $request, User $userModel, $id)
+    public function destroy(Request $request, $id)
     {
-        $userModel->destroyUser($id);
+        $this->userModel->destroyUser($id);
 
         $request->session()->flash('success', __('admin/user.alerts.site_user_delete_success'));
 

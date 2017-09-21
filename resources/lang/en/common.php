@@ -17,4 +17,13 @@ return [
     'register' => 'Register',
     'logout' => 'Logout',
 
+    'errors' => [
+        '403' => 'Ups! You do not have permission to this page',
+        '404' => 'Ups! The page is not found',
+    ],
+
+    'buttons' => [
+        'back_to_previous_page' => 'Return back',
+    ],
+
 ];

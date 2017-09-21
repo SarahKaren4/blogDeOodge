@@ -38,6 +38,8 @@ return [
         'users' => 'Users',
         'admins' => 'Admins',
         'email' => 'E-mail',
+        'posts' => 'Posts',
+        'comments' => 'Comments',
     ],
     'labels' => [
         'name' => 'Alias',

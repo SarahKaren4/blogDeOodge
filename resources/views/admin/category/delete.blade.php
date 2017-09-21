@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    @lang('admin/admin.titles.category_delete') "{{ $category->name }}" ?
+    @lang('admin/blog.titles.category_delete') "{{ $category->title }}" ?
 @endsection
 
 
@@ -13,7 +13,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-body">
-                        <h3 style="margin:0">@lang('admin/admin.titles.category_delete') "{{ $category->name }}" ?</h3>
+                        <h3 style="margin:0">@lang('admin/blog.titles.category_delete') "{{ $category->title }}" ?</h3>
                 </div>
             </div>
 
@@ -24,7 +24,7 @@
                         <div class="panel-body">
 
                             @if($category->posts()->count())
-                                <div class="alert alert-danger" role="alert">@lang('admin/user.texts.warning_important_relations')</div>
+                                <div class="alert alert-danger" role="alert">@lang('admin/blog.texts.warning_important_relations')</div>
                             @endif
 
                             <table class="table">

@@ -75,6 +75,7 @@ class User extends Authenticatable
     {
         $user = $this->getUserById($id);
 
+        $user->comments()->delete();
         $user->delete();
     }
 
@@ -105,6 +106,6 @@ class User extends Authenticatable
 
     public function comments()
     {
-        return $this->morphMany('App\Model\Comment', 'user');
+        return $this->morphMany('App\Models\Comment', 'user');
     }
 }

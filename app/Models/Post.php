@@ -121,6 +121,15 @@ class Post extends Model
         return date('j, m, Y | g:i:s a', strtotime($value));
     }
 
+    public function getImageAttribute($value)
+    {
+        if (isset($value)) {
+            return $value;
+        } else {
+            return 'no_image.jpg';
+        }
+    }
+
     public function setPublishedAtattribute($value)
     {
         $this->attributes['published_at'] = date('Y-m-d H:i:s', strtotime($this->formatDate($value)));

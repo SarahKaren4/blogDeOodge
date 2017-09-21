@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    @lang('admin/user.titles.site_user_delete') "{{ $user->name }}" ?
+    @lang('admin/blog.titles.comment_delete')?
 @endsection
 
 
@@ -13,7 +13,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-body">
-                        <h3 style="margin:0">@lang('admin/user.titles.site_user_delete') "{{ $user->name }}" ?</h3>
+                        <h3 style="margin:0">@lang('admin/blog.titles.comment_delete')?</h3>
                 </div>
             </div>
 
@@ -23,31 +23,13 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
 
-                            @if($user->comments()->count())
-                                <div class="alert alert-danger" role="alert">@lang('admin/user.texts.warning_relations')</div>
-                            @endif
+                            <div class="well">
+                                {{ $comment->comment }}
+                            </div>
 
-                            <table class="table">
-                                <thead>
-                                    <th>@lang('admin/user.tables.relation_name')</th>
-                                    <th>@lang('admin/user.tables.relations_count')</th>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>@lang('admin/user.tables.comments')</td>
-                                        <td>{{ $user->comments()->count() }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                        </div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <form action="{{ route('admin.user.destroy', ['id' => $user->id]) }}" method="POST">
+                                    <form action="{{ route('admin.comment.destroy', ['id' => $comment->id]) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
                                         <input type="text" name="redirect_to" hidden value="{{ URL::previous() }}">
@@ -60,6 +42,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 

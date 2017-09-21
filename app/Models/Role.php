@@ -51,13 +51,10 @@ class Role extends LaratrustRole
         $importantRelations = $role->admins()->count() || $role->users()->count();
 
         if (!$importantRelations) {
-
             $role->permissions()->detach();
             $role->users()->detach();
             $role->admins()->detach();
-
             $role->delete();
-
         }
     }
 

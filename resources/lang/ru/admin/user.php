@@ -38,6 +38,8 @@ return [
         'users' => 'Пользователи',
         'admins' => 'Администраторы',
         'email' => 'E-mail',
+        'posts' => 'Посты',
+        'comments' => 'Комментарии',
     ],
     'labels' => [
         'name' => 'Алиас',

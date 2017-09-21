@@ -46,7 +46,7 @@ class Category extends Model
             $data[$lang]['meta_description'] = $request->input('meta-description-' . $lang);
         }
 
-        $post = $this->create($data);
+        $category = $this->create($data);
     }
 
     public function getCategoryById($id)
@@ -56,25 +56,30 @@ class Category extends Model
 
     public function updateCategory($request, $id)
     {
-        $post = $this->findOrFail($id);
+        $category = $this->findOrFail($id);
 
-        $post->slug = $request->slug;
-        $post->status = $request->status;
+        $category->slug = $request->slug;
+        $category->status = $request->status;
 
         foreach (config('translatable.locales') as $lang) {
-            $post->translate($lang)->title = $request->input('title-' . $lang);
-            $post->translate($lang)->meta_title = $request->input('meta-title-' . $lang);
-            $post->translate($lang)->meta_description = $request->input('meta-description-' . $lang);
+            $category->translate($lang)->title = $request->input('title-' . $lang);
+            $category->translate($lang)->meta_title = $request->input('meta-title-' . $lang);
+            $category->translate($lang)->meta_description = $request->input('meta-description-' . $lang);
         }
 
-        $post->touch();
-        $post->save();
+        $category->touch();
+        $category->save();
     }
 
     public function destroyCategory($id)
     {
-        $post = $this->findOrFail($id);
-        $post->delete();
+        $category = $this->findOrFail($id);
+
+        $importantRelations = $category->posts()->count();
+
+        if (!$importantRelations) {
+            $category->delete();
+        }
     }
 
     public function scopeSort($query)

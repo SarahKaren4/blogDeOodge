@@ -8,15 +8,22 @@ use Illuminate\Validation\Rule;
 
 class CategoryController extends \App\Http\Controllers\Controller
 {
+    private $categoryModel;
 
-    public function __construct()
+    public function __construct(Category $categoryModel)
     {
         $this->middleware('admin');
+        $this->middleware('permission:read-categories')->only(['index', 'show']);
+        $this->middleware('permission:create-categories')->only(['create', 'store']);
+        $this->middleware('permission:update-categories')->only(['edit', 'update']);
+        $this->middleware('permission:delete-categories')->only(['delete', 'destroy']);
+
+        $this->categoryModel = $categoryModel;
     }
 
-    public function index(Category $categoryModel)
+    public function index()
     {
-        $categories = $categoryModel->getCategoriesList();
+        $categories = $this->categoryModel->getCategoriesList();
 
         return view('admin.category.all', [
             'categories' => $categories,
@@ -28,7 +35,7 @@ class CategoryController extends \App\Http\Controllers\Controller
         return view('admin.category.create');
     }
 
-    public function store(Request $request, Category $categoryModel)
+    public function store(Request $request)
     {
         $validateArray = [
             'slug' => 'required|unique:posts|max:150|regex:/^[a-zA-z0-9\-\_]+$/',
@@ -43,32 +50,32 @@ class CategoryController extends \App\Http\Controllers\Controller
 
         $request->validate($validateArray);
 
-        $categoryModel->storeCategory($request);
+        $this->categoryModel->storeCategory($request);
 
         $request->session()->flash('success', __('admin/blog.alerts.category_store_success'));
 
         return redirect()->route('admin.categories');
     }
 
-    public function show(Category $categoryModel, $id)
+    public function show($id)
     {
-        $category = $categoryModel->getCategoryById($id);
+        $category = $this->categoryModel->getCategoryById($id);
 
         return view('admin.category.show', [
             'category' => $category,
         ]);
     }
 
-    public function edit(Category $categoryModel, $id)
+    public function edit($id)
     {
-        $category = $categoryModel->getCategoryById($id);
+        $category = $this->categoryModel->getCategoryById($id);
 
         return view('admin.category.edit', [
             'category' => $category,
         ]);
     }
 
-    public function update(Request $request, Category $categoryModel, $id)
+    public function update(Request $request, $id)
     {
         $validateArray = [
             'slug' => [
@@ -88,25 +95,25 @@ class CategoryController extends \App\Http\Controllers\Controller
 
         $request->validate($validateArray);
 
-        $categoryModel->updateCategory($request, $id);
+        $this->categoryModel->updateCategory($request, $id);
 
         $request->session()->flash('success', __('admin/blog.alerts.category_update_success'));
 
         return redirect()->to($request->redirect_to);
     }
 
-    public function delete(Category $categoryModel, $id)
+    public function delete($id)
     {
-        $category = $categoryModel->getCategoryById($id);
+        $category = $this->categoryModel->getCategoryById($id);
 
         return view('admin.category.delete', [
             'category' => $category,
         ]);
     }
 
-    public function destroy(Request $request, Category $categoryModel, $id)
+    public function destroy(Request $request, $id)
     {
-        $categoryModel->destroyCategory($id);
+        $this->categoryModel->destroyCategory($id);
 
         $request->session()->flash('success', __('admin/blog.alerts.category_delete_success'));
 
