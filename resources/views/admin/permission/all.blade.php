@@ -33,8 +33,8 @@
                                 <th>@lang('admin/user.tables.permission')</th>
                                 <th>@lang('admin/user.tables.name')</th>
                                 <th>@lang('admin/user.tables.description')</th>
-                                <th>@lang('admin/user.tables.dates')</th>
-                                <th>@lang('admin/user.tables.actions')</th>
+                                <th style="min-width:220px">@lang('admin/user.tables.dates')</th>
+                                <th style="min-width:250px">@lang('admin/user.tables.actions')</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -45,7 +45,8 @@
                                     <td>{{ $permission->display_name }}</td>
                                     <td>{{ $permission->description }}</td>
                                     <td>
-                                        {{ $permission->created_at }}<br>{{ $permission->updated_at }}
+                                        <i class="fa fa-plus"></i> {{ $permission->created_at }}<br>
+                                        <i class="fa fa-refresh"></i> {{ $permission->updated_at }}
                                     </td>
                                     <td class="text-right">
                                         <a href="{{ route('admin.permission.edit', ['id' => $permission->id]) }}" class="btn btn-default btn-sm"><i class="fa fa-edit"></i> @lang('admin/common.buttons.edit')</a>

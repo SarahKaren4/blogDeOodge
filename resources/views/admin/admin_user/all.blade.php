@@ -33,8 +33,8 @@
                                 <th>@lang('admin/user.tables.first_name')</th>
                                 <th>@lang('admin/user.tables.email')</th>
                                 <th>@lang('admin/user.tables.role')</th>
-                                <th>@lang('admin/user.tables.dates')</th>
-                                <th>@lang('admin/user.tables.actions')</th>
+                                <th style="min-width:220px">@lang('admin/user.tables.dates')</th>
+                                <th style="min-width:350px">@lang('admin/user.tables.actions')</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -49,7 +49,8 @@
                                         @endforeach
                                     </td>
                                     <td>
-                                        {{ $admin->created_at }}<br>{{ $admin->updated_at }}
+                                        <i class="fa fa-plus"></i> {{ $admin->created_at }}<br>
+                                        <i class="fa fa-refresh"></i> {{ $admin->updated_at }}
                                     </td>
                                     <td class="text-right">
                                         <a href="{{ route('admin.admin.show', ['id' => $admin->id]) }}" class="btn btn-default btn-sm"><i class="fa fa-eye"></i> @lang('admin/common.buttons.view')</a>

@@ -91,12 +91,12 @@ class User extends Authenticatable
 
     public function getCreatedAtAttribute($value)
     {
-        return date('j, m, Y | g:i a', strtotime($value));
+        return date('j, m, Y | g:i:s a', strtotime($value));
     }
 
     public function getUpdatedAtAttribute($value)
     {
-        return date('j, m, Y | g:i a', strtotime($value));
+        return date('j, m, Y | g:i:s a', strtotime($value));
     }
 
     public function setNameAttribute($value)

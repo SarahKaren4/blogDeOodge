@@ -33,7 +33,7 @@
                                 <th>@lang('admin/blog.tables.title')</th>
                                 <th>@lang('admin/blog.tables.status')</th>
                                 <th style="min-width:220px">@lang('admin/blog.tables.timestamps')</th>
-                                <th style="min-width:150px">@lang('admin/blog.tables.actions')</th>
+                                <th style="min-width:350px">@lang('admin/blog.tables.actions')</th>
                             </tr>
                         </thead>
                         <tbody>

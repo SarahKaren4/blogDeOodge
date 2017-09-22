@@ -26,8 +26,8 @@
                                 <th>@lang('admin/blog.tables.user')</th>
                                 <th>@lang('admin/blog.tables.post')</th>
                                 <th>@lang('admin/blog.tables.status')</th>
-                                <th>@lang('admin/blog.tables.timestamps')</th>
-                                <th>@lang('admin/blog.tables.actions')</th>
+                                <th style="min-width:210px">@lang('admin/blog.tables.timestamps')</th>
+                                <th style="min-width:100px">@lang('admin/blog.tables.actions')</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -43,8 +43,8 @@
                                         <i class="fa fa-refresh"></i> {{ $comment->updated_at }}<br>
                                     </td>
                                     <td class="text-right">
-                                        <a href="{{ route('admin.comment.edit', ['id' => $comment->id]) }}" class="btn btn-default btn-sm"><i class="fa fa-edit"></i> @lang('admin/common.buttons.edit')</a>
-                                        <a href="{{ route('admin.comment.delete', ['id' => $comment->id]) }}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> @lang('admin/common.buttons.delete')</a>
+                                        <a href="{{ route('admin.comment.edit', ['id' => $comment->id]) }}" class="btn btn-default btn"><i class="fa fa-edit"></i></a>
+                                        <a href="{{ route('admin.comment.delete', ['id' => $comment->id]) }}" class="btn btn-danger btn"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

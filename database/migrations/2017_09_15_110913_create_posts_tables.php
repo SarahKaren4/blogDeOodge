@@ -20,7 +20,7 @@ class CreatePostsTables extends Migration
             $table->boolean('status');
             $table->integer('user_id')->unsigned();
             $table->timestamps();
-            $table->timestamp('published_at')->default(NULL);
+            $table->timestamp('published_at')->nullable();
 
             $table->foreign('user_id')
               ->references('id')->on('admins')
