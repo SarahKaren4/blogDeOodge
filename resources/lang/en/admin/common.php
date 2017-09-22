@@ -25,4 +25,5 @@ return [
         'updated_at' => 'Updated at',
         'important' => 'Important',
     ],
+    'copyright' => 'Developed by Vilsky.Viktor',
 ];

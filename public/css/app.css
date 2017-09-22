@@ -11407,3 +11407,11 @@ ul.pagination {
   margin: 0 !important;
 }
 
+.home_menu_link {
+  color: #636b6f;
+}
+
+.home_menu_link:hover {
+  text-decoration: none;
+}
+
