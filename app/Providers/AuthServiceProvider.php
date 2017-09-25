@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Gate;
 use App\Policies\AdminPolicy;
 use App\Models\Admin;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Laravel\Passport\Passport;
+use Carbon\Carbon;
 
 class AuthServiceProvider extends ServiceProvider
 {

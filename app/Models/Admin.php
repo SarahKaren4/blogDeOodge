@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Notifications\AdminResetPasswordNotification;
 use Laratrust\Traits\LaratrustUserTrait;
 
+
 class Admin extends Authenticatable
 {
     use LaratrustUserTrait;

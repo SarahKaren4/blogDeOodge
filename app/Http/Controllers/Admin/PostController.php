@@ -24,12 +24,14 @@ class PostController extends \App\Http\Controllers\Controller
         $this->categoryModel = $categoryModel;
     }
 
-    public function index(Post $postModel)
+    public function index(Request $request)
     {
-        $posts = $postModel->getPostsList();
+        $posts = $this->postModel->getPostsList($request);
+        $categories = $this->categoryModel->getCategories();
 
         return view('admin.post.all', [
             'posts' => $posts,
+            'categories' => $categories,
         ]);
     }
 

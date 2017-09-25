@@ -46,6 +46,9 @@ return [
         'attached_image' => 'Attached image',
         'choose_categories' => 'Choose categories',
         'comment' => 'Comment',
+        'user' => 'User',
+        'all' => 'All',
+        'category' => 'Category',
     ],
     'texts' => [
         'active' => 'Active',

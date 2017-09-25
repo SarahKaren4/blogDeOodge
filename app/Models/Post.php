@@ -22,9 +22,18 @@ class Post extends Model
         $this->defaultLocale = App::getLocale();
     }
 
-    public function getPostsList()
+    public function getPostsList($request = [])
     {
-        return $this->sort()->translated()->paginate(10);
+        //return $this->sort()->filter($request)->translated()->paginate(10);
+
+        return $this->join('post_translations as t', 'posts.id', '=', 't.post_id')
+                    ->join('admins as a', 'posts.user_id', '=', 'a.id')
+                    ->join('category_post as cp', 'posts.id', '=', 'cp.post_id')
+                    ->select('posts.*', 't.locale', 't.title', 't.description', 't.meta_title', 't.meta_description', 'a.name', 'cp.category_id')
+                    ->where('t.locale', '=', $this->defaultLocale)
+                    ->filter($request)
+                    ->sort()
+                    ->paginate(10);
     }
 
     public function getPosts()
@@ -104,6 +113,26 @@ class Post extends Model
     public function scopeSort($query)
     {
         $query->latest('id');
+    }
+
+    public function scopeFilter($query, $request)
+    {
+        if ($request->filled('title')) {
+            $query->where('title', 'like', '%'.$request->title.'%');
+        }
+        if ($request->filled('user')) {
+            $query->where('name', 'like', '%'.$request->user.'%');
+        }
+        if ($request->filled('status')) {
+            $query->where('status', '=', $request->status);
+        }
+        if ($request->filled('category')) {
+            $query->where('category_id', '=', $request->category);
+        }
+        //print_r(date('Y-m-d', strtotime($this->formatDate($request->published_at))));
+        if ($request->filled('published_at')) {
+            $query->where('published_at', 'like', date('Y-m-d', strtotime($this->formatDate($request->published_at))).'%');
+        }
     }
 
     public function getPublishedAtattribute($value)

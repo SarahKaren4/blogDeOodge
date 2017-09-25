@@ -20,6 +20,9 @@ Route::namespace('Admin')->group(function () {
         // Main admin page
         Route::get('/', ['as' => 'admin.home', 'uses' => 'AdminController@index']);
 
+        // API clients page
+        Route::get('/api', ['as' => 'admin.api', 'uses' => 'AdminController@api']);
+
         // Permissions CRUD
         Route::resource('permissions', 'PermissionController', [
             'names' => [

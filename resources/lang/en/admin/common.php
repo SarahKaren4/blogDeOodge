@@ -7,6 +7,7 @@ return [
         'save' => 'Save',
         'cancel' => 'Cancel',
         'create' => 'Create',
+        'search' => 'Search',
     ],
     'menu' => [
         'main' => 'Main',

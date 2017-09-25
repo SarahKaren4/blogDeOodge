@@ -4,6 +4,10 @@
     @lang('admin/blog.titles.posts')
 @endsection
 
+@section('top_styles')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
+@endsection
 
 @section('content')
 <div class="container">
@@ -21,6 +25,66 @@
                         </div>
                     </div>
 
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form method="GET" action="{{ route('admin.posts') }}">
+                        <div class="row">
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="title">@lang('admin/blog.labels.title'): </label>
+                                <input type="text" class="form-control" name="title" id="title" value="{{ request()->input('title') }}" placeholder="@lang('admin/blog.labels.title')">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="user">@lang('admin/blog.labels.user'): </label>
+                                <input type="text" class="form-control" name="user" id="user" value="{{ request()->input('user') }}" placeholder="@lang('admin/blog.labels.user')">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="status">@lang('admin/blog.labels.status'): </label>
+                                <select class="form-control" name="status" id="status">
+                                    <option value="">@lang('admin/blog.labels.all')</option>
+                                    <option value="1" {{ request()->input('status') === '1' ? 'selected' : '' }}>Anabled</option>
+                                    <option value="0" {{ request()->input('status') === '0' ? 'selected' : '' }}>Disabled</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="category">@lang('admin/blog.labels.category'): </label>
+                                <select class="form-control" name="category" id="category">
+                                    <option value="">@lang('admin/blog.labels.all')</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}" {{ request()->input('category') == $category->id ? 'selected' : '' }}>{{ $category->title }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="published_at">@lang('admin/blog.labels.published_at'): </label>
+                                <input type="text" class="form-control" id="published_at" name="published_at" value="{{ request()->filled('published_at') ? request()->input('published_at') : '' }}" placeholder="@lang('admin/blog.labels.published_at')" >
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-search"></i> @lang('admin/common.buttons.search')</button>
+                            <a href="{{ route('admin.posts') }}" class="btn btn-default btn-block"><i class="fa fa-ban"></i> @lang('admin/common.buttons.cancel')</a>
+                        </div>
+
+                        </div>
+
+                    </form>
                 </div>
             </div>
 
@@ -76,7 +140,7 @@
             @if($posts->lastPage() > 1)
                 <div class="panel panel-default">
                     <div class="panel-body text-center">
-                        {{ $posts->links() }}
+                        {{ $posts->appends(request()->input())->links() }}
                     </div>
                 </div>
             @endif
@@ -84,4 +148,29 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('bottom_scripts')
+
+<script type="text/javascript" src="{{ asset('js/moment-with-locales.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+
+<script>
+
+$('#published_at').datetimepicker({
+
+    format: 'D, MM, YYYY',
+    dayViewHeaderFormat: 'MMMM YYYY',
+    sideBySide: true,
+    showClose: true,
+    widgetPositioning: {
+        horizontal: 'auto',
+        vertical: 'bottom',
+    },
+    locale: '{{ Config::get("app.locale") }}',
+
+});
+
+</script>
+
 @endsection

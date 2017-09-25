@@ -216,7 +216,6 @@
 <script type="text/javascript" src="{{ asset('js/select2.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=prz9vfpgqdelq0k500a5dpabhcdzuvvw9yigzddpy1lj2nd9"></script>
-<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=prz9vfpgqdelq0k500a5dpabhcdzuvvw9yigzddpy1lj2nd9"></script>
 
 <script>
 
