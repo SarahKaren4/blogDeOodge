@@ -1,6 +1,8 @@
 @extends('layouts.site')
 
-@section('title', 'User login page')
+@section('title')
+    @lang('auth.titles.user_login')
+@endsection
 
 @section('content')
 <div class="container">

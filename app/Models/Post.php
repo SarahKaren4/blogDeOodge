@@ -33,6 +33,7 @@ class Post extends Model
                     ->where('t.locale', '=', $this->defaultLocale)
                     ->filter($request)
                     ->sort()
+                    ->groupBy('posts.id')
                     ->paginate(10);
     }
 
@@ -69,6 +70,11 @@ class Post extends Model
     public function getPostById($id)
     {
         return $this->findOrfail($id);
+    }
+
+    public function getPostBySlug($slug)
+    {
+        return $this->where('slug', $slug)->first();
     }
 
     public function updatePost($request, $id)
@@ -117,21 +123,23 @@ class Post extends Model
 
     public function scopeFilter($query, $request)
     {
-        if ($request->filled('title')) {
-            $query->where('title', 'like', '%'.$request->title.'%');
-        }
-        if ($request->filled('user')) {
-            $query->where('name', 'like', '%'.$request->user.'%');
-        }
-        if ($request->filled('status')) {
-            $query->where('status', '=', $request->status);
-        }
-        if ($request->filled('category')) {
-            $query->where('category_id', '=', $request->category);
-        }
-        //print_r(date('Y-m-d', strtotime($this->formatDate($request->published_at))));
-        if ($request->filled('published_at')) {
-            $query->where('published_at', 'like', date('Y-m-d', strtotime($this->formatDate($request->published_at))).'%');
+        if($request) {
+            if ($request->filled('title')) {
+                $query->where('title', 'like', '%'.$request->title.'%');
+            }
+            if ($request->filled('user')) {
+                $query->where('name', 'like', '%'.$request->user.'%');
+            }
+            if ($request->filled('status')) {
+                $query->where('status', '=', $request->status);
+            }
+            if ($request->filled('category')) {
+                $query->where('category_id', '=', $request->category);
+            }
+            //print_r(date('Y-m-d', strtotime($this->formatDate($request->published_at))));
+            if ($request->filled('published_at')) {
+                $query->where('published_at', 'like', date('Y-m-d', strtotime($this->formatDate($request->published_at))).'%');
+            }
         }
     }
 
@@ -211,6 +219,6 @@ class Post extends Model
 
     public function comments()
     {
-        return $this->hasMany('App\Models\Comment');
+        return $this->hasMany('App\Models\Comment')->orderBy('id', 'desc');
     }
 }

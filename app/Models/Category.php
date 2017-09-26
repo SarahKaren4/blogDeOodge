@@ -30,6 +30,7 @@ class Category extends Model
                     ->where('t.locale', '=', $this->defaultLocale)
                     ->admitted()
                     ->sort()
+                    ->groupBy('categories.id')
                     ->get();
     }
 
@@ -52,6 +53,16 @@ class Category extends Model
     public function getCategoryById($id)
     {
         return $this->findOrfail($id);
+    }
+
+    public function getCategoryBySlug($slug)
+    {
+        return $this->where('slug', $slug)->first();
+    }
+
+    public function getPostsList($category)
+    {
+        return $category->posts()->paginate(10);
     }
 
     public function updateCategory($request, $id)
@@ -114,7 +125,7 @@ class Category extends Model
 
     public function posts()
     {
-        return $this->belongsToMany('App\Models\Post');
+        return $this->belongsToMany('App\Models\Post')->orderBy('published_at', 'desc');
     }
 
     public function categoryTranslations()

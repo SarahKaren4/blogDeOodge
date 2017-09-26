@@ -1,13 +1,20 @@
 @extends('layouts.site')
 
 @section('title')
-    @lang('site/blog.title')
+    {{ $category->title }}
 @endsection
 
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h2 style="margin:0">{{ $category->title }}</h2>
+                </div>
+            </div>
+
             @foreach($posts as $post)
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -35,35 +42,15 @@
                 </div>
             </div>
             @endforeach
-        </div>
 
-        <div class="col-md-4">
-
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h3 style="margin:0">@lang('site/blog.categories')</h3>
-                </div>
-            </div>
-
-            <ul class="list-group">
-                @foreach($categories as $category)
-                    <li class="list-group-item">
-                        <span class="badge">{{ $category->posts()->count() }}</span>
-                        <a href="{{ route('site.category.show', ['slug' => $category->slug]) }}">{{ $category->title }}</a>
-                    </li>
-                @endforeach
-            </ul>
-        </div>
-
-        @if($posts->lastPage() > 1)
-            <div class="col-md-12">
+            @if($posts->lastPage() > 1)
                 <div class="panel panel-default">
                     <div class="panel-body text-center">
                         {{ $posts->links() }}
                     </div>
                 </div>
-            </div>
-        @endif
+            @endif
+        </div>
 
     </div>
 </div>

@@ -4,16 +4,17 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Kaishiyoku\Menu\Facades\Menu;
+use App\Models\Category;
 
 class MakeMenu
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
+    private $categoryModel;
+
+    public function __construct(Category $categoryModel)
+    {
+        $this->categoryModel = $categoryModel;
+    }
+
     public function handle($request, Closure $next)
     {
 
@@ -31,6 +32,21 @@ class MakeMenu
                 Menu::link('admin.categories', '<i class="fa fa-circle-o"></i>&nbsp;&nbsp;' . __('admin/common.menu.categories')),
                 Menu::link('admin.comments', '<i class="fa fa-circle-o"></i>&nbsp;&nbsp;' . __('admin/common.menu.comments')),
             ], '<i class="fa fa-th-list"></i> ' . __('admin/common.menu.blog')),
+        ], ['class' => 'nav navbar-nav']);
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $categoriesArray = [];
+
+        foreach($this->categoryModel->getCategories() as $category) {
+            $categoriesArray[] = Menu::link('site.category.show', '<i class="fa fa-circle-o"></i>&nbsp;&nbsp;' . $category->title, ['slug' => $category->slug]);
+        }
+
+        Menu::register('site_nav', [
+            Menu::link('site.home', '<i class="fa fa-home"></i> ' . __('site/common.menu.blog')),
+            Menu::dropdown($categoriesArray, '<i class="fa fa-th-list"></i> ' . __('site/common.menu.categories')),
+            Menu::link('site.contacts', '<i class="fa fa-phone"></i> ' . __('site/common.menu.contacts')),
+            Menu::link('site.aboutus', '<i class="fa fa-info-circle"></i> ' . __('site/common.menu.about_us')),
         ], ['class' => 'nav navbar-nav']);
 
         return $next($request);

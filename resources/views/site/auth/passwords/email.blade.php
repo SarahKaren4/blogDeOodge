@@ -1,6 +1,8 @@
 @extends('layouts.site')
 
-@section('title', 'User reset password page')
+@section('title')
+    @lang('auth.titles.user_password_reset')
+@endsection
 
 @section('content')
 <div class="container">

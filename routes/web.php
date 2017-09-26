@@ -2,7 +2,13 @@
 
 Route::namespace('Site')->group(function () {
     Auth::routes();
+
     Route::get('/', ['as' => 'site.home', 'uses' => 'SiteController@index']);
+    Route::get('/post/{slug}', ['as' => 'site.post.show', 'uses' => 'SiteController@showPost']);
+    Route::get('/category/{slug}', ['as' => 'site.category.show', 'uses' => 'SiteController@showCategory']);
+
+    Route::get('/contacts', ['as' => 'site.contacts', 'uses' => 'SiteController@showContacts']);
+    Route::get('/about_us', ['as' => 'site.aboutus', 'uses' => 'SiteController@showAboutUs']);
 });
 
 Route::namespace('Admin')->group(function () {
