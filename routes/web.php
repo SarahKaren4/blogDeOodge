@@ -7,6 +7,9 @@ Route::namespace('Site')->group(function () {
     Route::get('/post/{slug}', ['as' => 'site.post.show', 'uses' => 'SiteController@showPost']);
     Route::get('/category/{slug}', ['as' => 'site.category.show', 'uses' => 'SiteController@showCategory']);
 
+    Route::post('/comment/{id}', ['as' => 'site.comment.show', 'uses' => 'SiteController@showComment']);
+    Route::post('/comment', ['as' => 'site.comment.store', 'uses' => 'SiteController@storeComment']);
+
     Route::get('/contacts', ['as' => 'site.contacts', 'uses' => 'SiteController@showContacts']);
     Route::get('/about_us', ['as' => 'site.aboutus', 'uses' => 'SiteController@showAboutUs']);
 });
@@ -25,9 +28,6 @@ Route::namespace('Admin')->group(function () {
 
         // Main admin page
         Route::get('/', ['as' => 'admin.home', 'uses' => 'AdminController@index']);
-
-        // API clients page
-        Route::get('/api', ['as' => 'admin.api', 'uses' => 'AdminController@api']);
 
         // Permissions CRUD
         Route::resource('permissions', 'PermissionController', [

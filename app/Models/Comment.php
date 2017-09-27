@@ -3,9 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Events\NewComment;
 
 class Comment extends Model
 {
+    protected $fillable = [
+        'comment', 'user_id', 'user_type', 'status'
+    ];
+
     public function getCommentsList()
     {
         return $this->sort()->paginate(10);
@@ -19,6 +24,8 @@ class Comment extends Model
     public function updateComment($request, $id)
     {
         $comment = $this->getCommentById($id);
+
+        $oldStatus = $comment->status;
 
         $comment->comment = $request->comment;
         $comment->status = $request->status;

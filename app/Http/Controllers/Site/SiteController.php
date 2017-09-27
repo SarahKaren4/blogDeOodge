@@ -5,15 +5,19 @@ namespace App\Http\Controllers\Site;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\Comment;
 
 class SiteController extends \App\Http\Controllers\Controller
 {
-    public function __construct(Post $postModel, Category $categoryModel)
-    {
-        //$this->middleware('auth');
+    protected $postModel;
+    protected $categoryModel;
+    protected $commenModel;
 
+    public function __construct(Post $postModel, Category $categoryModel, Comment $commentModel)
+    {
         $this->postModel = $postModel;
         $this->categoryModel = $categoryModel;
+        $this->commentModel = $commentModel;
     }
 
     public function index()
@@ -44,6 +48,25 @@ class SiteController extends \App\Http\Controllers\Controller
         return view('site.category', [
             'category' => $category,
             'posts' => $posts,
+        ]);
+    }
+
+    public function storeComment(Request $request)
+    {
+        $request->validate([
+            'comment' => 'max:500',
+            'post' => 'integer',
+        ]);
+
+        $this->postModel->storeComment($request);
+    }
+
+    public function showComment($id)
+    {
+        $comment = $this->commentModel->getCommentById($id);
+
+        return view('site.partials._comment', [
+            'comment' => $comment,
         ]);
     }
 

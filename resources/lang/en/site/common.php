@@ -2,6 +2,7 @@
 return [
     'buttons' => [
         'read_more' => 'Read more',
+        'send' => 'Send',
     ],
     'menu' => [
         'blog' => 'Blog',

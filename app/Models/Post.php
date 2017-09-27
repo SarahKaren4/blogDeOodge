@@ -8,6 +8,8 @@ use App;
 use Purifier;
 use Image;
 use Storage;
+use Auth;
+use App\Events\NewComment;
 
 class Post extends Model
 {
@@ -101,6 +103,28 @@ class Post extends Model
         $post->touch();
         $post->save();
         $post->categories()->sync($request->categories);
+    }
+
+    public function storeComment($request)
+    {
+        $post = $this->getPostById($request->post);
+
+        if (Auth::guard('admin')->check()) {
+            $user = Auth::guard('admin')->user();
+        } else {
+            $user = Auth::user();
+        }
+
+        $comment = [
+            'comment' => $request->comment,
+            'status' => true,
+            'user_id' => $user->id,
+            'user_type' => get_class($user)
+        ];
+
+        $comment = $post->comments()->create($comment);
+
+        event(new NewComment($comment));
     }
 
     public function destroyPost($id)
@@ -219,6 +243,6 @@ class Post extends Model
 
     public function comments()
     {
-        return $this->hasMany('App\Models\Comment')->orderBy('id', 'desc');
+        return $this->hasMany('App\Models\Comment')->where('status', '1')->orderBy('id', 'desc');
     }
 }

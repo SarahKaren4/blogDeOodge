@@ -2,6 +2,7 @@
 return [
     'buttons' => [
         'read_more' => 'Читать далее',
+        'send' => 'Отправить',
     ],
     'menu' => [
         'blog' => 'Блог',
