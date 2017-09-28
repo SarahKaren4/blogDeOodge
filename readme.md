@@ -19,7 +19,7 @@ Hello there. I have created this project for those who want to learn how Laravel
     * Categories
     * Comments with Broadcasting
     * About us and contacts pages
-    
+
 **The list of what I've used is below:**
 
 * Service Providers, Facades, Helpers
@@ -60,7 +60,21 @@ Hello there. I have created this project for those who want to learn how Laravel
 
 
 ## Instalation
-Sometext ...
+1. You need LAMP environment, Composer, Node.js and NPM installed on your computer. You can find how to do it in the documentation of each.
+2. Create your project folder
+3. Clone the project into your new project folder
+4. Configure your .env file
+    1. Insert your database access data
+    2. Configure your mail driver (for example mailtrap.io for testing)
+    3. Configure your Pusher access data (first register your account on pusher)
+5. Initialize Composer in your project folder (composer install)
+6. Initialize NPM in your project folder (npm install, npm run dev)
+7. Start migration (php artisan migrate)
+8. Start seeding (php artisan db:seed)
+
+That's all. Check out your new fresh project :)
+
+You can go to admin zone with link /admin. Superadmin account have this accesses: email: superadmin@app.com, pass: 123456
 
 ## Learning Laravel
 
