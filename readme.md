@@ -1,11 +1,63 @@
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
-<p align="center">
-Complex blog
-</p>
+## About complex blog
+Hello there. I have created this project for those who want to learn how Laravel framework works. I tried to use almost all functionality that the framework gives. What you'll find here:
 
-## About project
-Sometext ...
+* CMS system (admin zone)
+    * Multi language
+    * Authentication, Authorization (admins)
+    * Admin users CRUD
+    * Site users CRUD
+    * Roles, Permissions for admin users
+    * Blog posts CRUD with different relationships
+    * Categories CRUD (many to many)
+    * Comments managing (polymorphic relationships with User and Admin table)
+* Frontend (web site)
+    * Multi language
+    * Authentication, Authorization (users)
+    * Posts (blog, detail view)
+    * Categories
+    * Comments with Broadcasting
+    * About us and contacts pages
+    
+**The list of what I've used is below:**
+
+* Service Providers, Facades, Helpers
+* Routing
+* Middleware
+* CSRF Protection
+* Controllers, Models, Views
+* Requests
+* URL Generation
+* Session
+* Validation
+* Blade Templates
+* Localization
+* Compiling Assets
+* Multi Auth, Authentication, Authorization, Password Reset
+* Broadcasting, Laravel Echo
+* Events, Listeners
+* File Storage
+* Helpers
+* Mail
+* Notifications
+* Query Builder
+* Pagination
+* Migrations, Seeding
+* Eloquent ORM Relationships, Mutators
+
+**What I've used for expanding possibilities:**
+
+* santigarcor/laratrust (roles and permissions for admin users)
+* Faker/Factory (to generate content for seeding)
+* Kaishiyoku/laravel-menu (to generate powerful menu with active items)
+* mewebstudio/Purifier (to protect HTML entrings)
+* intervention/image (powerful module for modifying your images)
+* dimsav/laravel-translatable (to make translatable ORM engine)
+* Pusher (Driver for broadcasting)
+* Font awesome (icons)
+* Select2 (awesome select inputs)
+
 
 ## Instalation
 Sometext ...
