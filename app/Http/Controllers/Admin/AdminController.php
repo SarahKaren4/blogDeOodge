@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Models\Admin;
-use App\Models\User;
-use App\Models\Role;
-use App\Models\Post;
 use App\Models\Category;
 use App\Models\Comment;
+use App\Models\Post;
+use App\Models\Role;
+use App\Models\User;
 
 class AdminController extends \App\Http\Controllers\Controller
 {
@@ -27,5 +26,6 @@ class AdminController extends \App\Http\Controllers\Controller
             'countCategories' => Category::all()->count(),
             'countComments' => Comment::all()->count(),
         ]);
+
     }
 }

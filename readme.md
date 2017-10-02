@@ -68,8 +68,9 @@ Hello there. I have created this project for those who want to learn how Laravel
     3. Configure your Pusher access data (first register your account on pusher)
 4. Initialize Composer in your project folder (composer install)
 5. Initialize NPM in your project folder (npm install, npm run dev)
-6. Start migration (php artisan migrate)
-7. Start seeding (php artisan db:seed)
+6. Put your Pusher key in the end of the file resources/assets/js/bootstrap.js
+7. Start migration (php artisan migrate)
+8. Start seeding (php artisan db:seed)
 
 That's all. Check out your new fresh project :)
 
