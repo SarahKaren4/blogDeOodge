@@ -1,0 +1,15 @@
+-------------------- Auto-Git Log --------------------
+		Thu Jul 02 2020 06:16:51 GMT+0000 (heure moyenne de Greenwich)
+------------------------------------------------------
+
+Modified files:
+
+
+Created files:
+* .autogit/logs/log-2-6-2020-5-46-45.txt
+
+
+Deleted files:
+
+
+Renamed files:
