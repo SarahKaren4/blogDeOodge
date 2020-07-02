@@ -1,0 +1,42 @@
+-------------------- Auto-Git Log --------------------
+		Thu Jul 02 2020 02:16:08 GMT+0000 (heure moyenne de Greenwich)
+------------------------------------------------------
+
+Modified files:
+* app/Models/Team.php
+* config/app.php
+* config/translatable.php
+* database/seeds/BlogSeeder.php
+* package-lock.json
+* public/css/app.css
+* public/js/app.js
+* resources/lang/en/site/common.php
+* resources/views/admin/partials/_footer.blade.php
+* resources/views/admin/partials/_nav.blade.php
+* resources/views/admin/post/create.blade.php
+* resources/views/site/home.blade.php
+* resources/views/site/partials/_footer.blade.php
+* resources/views/site/partials/_head.blade.php
+* resources/views/site/partials/_nav.blade.php
+* resources/views/site/post.blade.php
+
+
+Created files:
+* .autogit/autogit.json
+* resources/lang/fr/admin/blog.php
+* resources/lang/fr/admin/common.php
+* resources/lang/fr/admin/user.php
+* resources/lang/fr/auth.php
+* resources/lang/fr/common.php
+* resources/lang/fr/pagination.php
+* resources/lang/fr/passwords.php
+* resources/lang/fr/site/blog.php
+* resources/lang/fr/site/common.php
+* resources/lang/fr/validation.php
+
+
+Deleted files:
+* .env.example
+
+
+Renamed files:
