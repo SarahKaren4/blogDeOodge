@@ -1,15 +1,14 @@
 <?php
 return [
     'buttons' => [
-        'read_more' => 'Read more',
-        'send' => 'Send',
+        'read_more' => 'Lire plus',
+        'send' => 'Envoyer',
     ],
     'menu' => [
-        'comments' => 'Commentaires',
         'blog' => 'Blog',
-        'categories' => 'Categories',
+        'categories' => 'Catégories',
         'contacts' => 'Contacts',
-        'about_us' => 'About us',
+        'about_us' => 'A propos de nous',
     ],
     'copyright' => 'Developed by Vilsky.Viktor',
 ];

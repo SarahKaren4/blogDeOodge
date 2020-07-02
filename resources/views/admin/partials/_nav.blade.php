@@ -21,7 +21,6 @@
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
 
             <!-- Left Side Of Navbar. You can find it in App\Http\Middleware\MakeMenu -->
-            {!! Menu::render('admin_nav') !!}
 
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">

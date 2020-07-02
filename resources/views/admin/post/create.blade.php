@@ -73,10 +73,10 @@
                                     <label for="status">@lang('admin/blog.labels.status')</label><br>
                                     <div class="btn-group" data-toggle="buttons">
                                         <label class="btn btn-default {{ old('status') ? 'active' : '' }}">
-                                            <input value="1" name="status" type="radio" autocomplete="off" {{ old('status') ? 'checked' : '' }}> <i class="fa fa-check-square-o"></i> Active
+                                            <input value="1" name="status" type="radio" autocomplete="off" {{ old('status') ? 'checked' : '' }}> <i class="fa fa-check-square-o"></i> Publié
                                         </label>
                                         <label class="btn btn-default {{ old('status') ? '' : 'active' }}">
-                                            <input value="0" name="status" type="radio" autocomplete="off" {{ old('status') ? '' : 'checked' }}> <i class="fa fa-ban"></i> Disabled
+                                            <input value="0" name="status" type="radio" autocomplete="off" {{ old('status') ? '' : 'checked' }}> <i class="fa fa-ban"></i> Brouillon
                                         </label>
                                     </div>
                                     @if ($errors->has('status'))
